@@ -1,10 +1,15 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Script from "next/script";
 import CoffeePopup from "@/components/CoffeePopup";
-import SocialIcons from "@/components/SocialIcons";
+import BlogHeader from "@/components/BlogHeader";
+import SiteFooter from "@/components/SiteFooter";
 import { trackEvent } from "@/lib/analytics";
 import { CURRENCY_KEY } from "@/lib/consent";
+import { homepageFaqs } from "@/lib/faqs";
+import { pricingPlans } from "@/lib/pricing";
+import { buildBreadcrumbSchema, buildFaqSchema, siteUrl } from "@/lib/schema";
 
 export default function HomePage() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -17,7 +22,7 @@ export default function HomePage() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeTutorial, setActiveTutorial] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [carouselMounted, setCarouselMounted] = useState(false);
   const bannerTrackRef = useRef<HTMLDivElement | null>(null);
@@ -112,100 +117,22 @@ export default function HomePage() {
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
-    check();
+    queueMicrotask(check);
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
   }, []);
 
   useEffect(() => {
-    setCarouselMounted(true);
+    queueMicrotask(() => setCarouselMounted(true));
   }, []);
 
   useEffect(() => {
-    setActiveTestimonial(0);
+    queueMicrotask(() => setActiveTestimonial(0));
   }, [isMobile]);
 
   useEffect(() => {
-    setActiveImageIndex(0);
+    queueMicrotask(() => setActiveImageIndex(0));
   }, [activeStep]);
-
-  const USD_TO_GBP = 0.75;
-  const toGBP = (usd: number) => Math.round(usd * USD_TO_GBP);
-
-  const newPricingPlans = [
-    {
-      name: "Full trial",
-      usd: "14 Days Free",
-      gbp: "14 Days Free",
-      originalUsd: null,
-      originalGbp: null,
-      subtitle: "A 14-day taste of everything",
-      features: ["10 quotes", "100 MB storage", "All features unlocked", "No credit card needed"],
-      featured: false,
-      comingSoon: false,
-      isFree: true,
-    },
-    {
-      name: "Lite",
-      usd: "Free",
-      gbp: "Free",
-      originalUsd: null,
-      originalGbp: null,
-      subtitle: "For individuals just getting started",
-      features: ["5 quotes", "50 MB storage"],
-      featured: false,
-      comingSoon: false,
-      isFree: true,
-    },
-    {
-      name: "Starter",
-      usd: "$19",
-      gbp: `£${toGBP(19)}`,
-      originalUsd: "$40",
-      originalGbp: `£${toGBP(40)}`,
-      subtitle: "For solo traders quoting regularly",
-      features: ["25 quotes", "500 MB storage", "All core features", "No card for trial"],
-      featured: false,
-      comingSoon: false,
-      isFree: false,
-    },
-    {
-      name: "Growth",
-      usd: "$39",
-      gbp: `£${toGBP(39)}`,
-      originalUsd: "$90",
-      originalGbp: `£${toGBP(90)}`,
-      subtitle: "For growing trade businesses",
-      features: ["100 quotes", "3 GB storage", "All core features", "Priority support"],
-      featured: true,
-      comingSoon: false,
-      isFree: false,
-    },
-    {
-      name: "Pro",
-      usd: "$59",
-      gbp: `£${toGBP(59)}`,
-      originalUsd: "$120",
-      originalGbp: `£${toGBP(120)}`,
-      subtitle: "For established teams with high quote volume",
-      features: ["200 quotes", "5 GB storage", "All core features", "Priority support"],
-      featured: false,
-      comingSoon: false,
-      isFree: false,
-    },
-    {
-      name: "Premium",
-      usd: "Coming Soon",
-      gbp: "Coming Soon",
-      originalUsd: null,
-      originalGbp: null,
-      subtitle: "Enterprise-level power for larger operations",
-      features: ["Higher limits", "Advanced features", "Dedicated support"],
-      featured: false,
-      comingSoon: true,
-      isFree: false,
-    },
-  ];
 
   const steps = [
     {
@@ -279,6 +206,42 @@ export default function HomePage() {
     setActiveImageIndex((index) => (index + 1) % currentImages.length);
   };
 
+  const tutorials = [
+    {
+      title: "How to Create a Roofing Materials Order from a Quote",
+      image: "/tutorials/orders.png",
+      href: "https://www.youtube.com/watch?v=kOkQuUy8MWQ&t=10s",
+    },
+    {
+      title: "Quote Tutorial",
+      image: "/tutorials/quote-tutorial.png",
+      href: "https://www.youtube.com/watch?v=pqIfx-rOcmo&t=197s",
+    },
+    {
+      title: "How to Create a Roofing Component Quote without digital measure",
+      image: "/tutorials/roofing-component-quote.png",
+      href: "https://www.youtube.com/watch?v=1MOvQX-Lf_c&t=108s",
+    },
+    {
+      title: "Roofing Components Tutorial",
+      image: "/tutorials/roofing-components.png",
+      href: "https://www.youtube.com/watch?v=XZSTIfGUHAU",
+    },
+  ];
+  const tutorialVisibleCount = isMobile ? 1 : 4;
+  const maxTutorialIndex = Math.max(0, tutorials.length - tutorialVisibleCount);
+  const tutorialOffsetIndex = Math.min(activeTutorial, maxTutorialIndex);
+  const tutorialPages = Array.from({ length: maxTutorialIndex + 1 }, (_, index) => index);
+  const tutorialTranslatePercent = 100 / tutorialVisibleCount;
+
+  const showPreviousTutorial = () => {
+    setActiveTutorial((index) => (index - 1 + maxTutorialIndex + 1) % (maxTutorialIndex + 1));
+  };
+
+  const showNextTutorial = () => {
+    setActiveTutorial((index) => (index + 1) % (maxTutorialIndex + 1));
+  };
+
   const renderScreenshotPreview = (className = "") => (
     <div className={`relative overflow-visible rounded-[2rem] bg-transparent transition-all duration-300 ${hasMultipleStepImages ? "pb-14 sm:pb-16" : ""} ${className}`}>
       <div>
@@ -347,11 +310,11 @@ export default function HomePage() {
       initials: "TE",
     },
     {
-      name: "James Hargrove",
-      business: "Hargrove Roofing Co.",
+      name: "Saskia",
+      business: "",
       quote:
-        "We cut our quoting time in half within the first week. The workflow is dead simple and our customers love getting a proper-looking quote instead of a scribbled note.",
-      initials: "JH",
+        "I was part of the QuoteCore+ beta testing group and shared feedback with the team about frustrations I had with the other software I was using at the time and what would make QuoteCore+ much better. Within two weeks, the team had built the features I mentioned - and made them even better than I expected! It's rare to see a team listen and act that quickly.",
+      initials: "S",
     },
     {
       name: "Tom Harris",
@@ -383,171 +346,40 @@ export default function HomePage() {
     },
   ];
 
-  const faqs = [
-    {
-      question: "Who is QuoteCore⁺ built for?",
-      answer:
-        "Built for contractors, builders, and tradespeople who want a faster, cleaner, and a more professional way to measure, quote, store, and manage jobs digitally.",
-    },
-    {
-      question: "How fast can I create a quote?",
-      answer:
-        "Once set up, most standard job quotes can be measured, built, and sent in as little as 10-15 minutes using reusable templates and our customer approval link system.",
-    },
-    {
-      question: "How do I get started?",
-      answer:
-        "Simply create a free account and test the full system risk-free for 14 days.",
-    },
-    {
-      question: "Does QuoteCore⁺ create quotes automatically?",
-      answer:
-        "QuoteCore⁺ gives you the tools to measure, build, and fully customise professional quotes quickly. You control your pricing, materials, labour, and templates - making every future quote faster and more consistent.",
-    },
-    {
-      question: "Why do contractors switch to QuoteCore⁺?",
-      answer:
-        "Because it saves time, reduces paperwork, solidifies disjointed systems, improves professionalism, and keeps everything organised in one place. Its also a very accurate system, allowing precise quotes and confident profit margins.",
-    },
-    {
-      question: "Is QuoteCore⁺ only for roofers?",
-      answer:
-        "No. QuoteCore⁺ started in roofing - that's where our founder's experience is - but it's built for construction businesses that measure, price, and quote jobs. Roofing, cladding, flooring, fencing, landscaping, general building work, and more.",
-    },
-  ];
-
   const primaryButton =
     "inline-flex min-h-11 items-center justify-center rounded-full bg-[#FF6B35] px-5 py-2.5 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#e85d2b]";
 
   const shimmerButton =
     "pill-shimmer inline-flex min-h-11 items-center justify-center rounded-full border border-zinc-300 bg-white px-5 py-2.5 text-sm font-medium text-zinc-900 transition-colors duration-200 hover:border-[#FF6B35]/40";
 
-  const topShimmerButton =
-    "pill-shimmer inline-flex min-h-11 items-center justify-center rounded-full border border-white/70 bg-white/72 px-5 py-2.5 text-sm font-medium text-zinc-900 shadow-[0_6px_24px_rgba(255,255,255,0.18)_inset,0_10px_30px_rgba(0,0,0,0.04)] backdrop-blur-3xl transition-colors duration-200";
-
-  const headerActionButton =
-    "inline-flex h-11 min-w-[170px] items-center justify-center rounded-full px-5 py-2.5 text-sm transition-colors duration-200";
-
-  const topPrimaryButton =
-    `${headerActionButton} bg-[#FF6B35] font-semibold text-white hover:bg-[#e85d2b]`;
-
   return (
     <>
+      <Script
+        id="home-faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(homepageFaqs)) }}
+      />
+      <Script
+        id="home-breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema([{ name: "Home", url: `${siteUrl}/` }])) }}
+      />
       <main className="min-h-screen bg-white text-zinc-950">
-
-        <header className="sticky top-0 z-50 border-b border-white/60 bg-white/68 shadow-[0_8px_30px_rgba(255,255,255,0.25)_inset,0_12px_40px_rgba(0,0,0,0.05)] backdrop-blur-[24px]">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-            <a href="/" className="flex items-center gap-3">
-              <img src="/MainQCP.png" alt="QuoteCore+" className="h-10 w-auto" />
-            </a>
-
-            <nav className="hidden items-center gap-3 lg:flex">
-            </nav>
-
-            {/* Desktop nav buttons */}
-            <div className="hidden items-center gap-3 lg:flex">
-              <a href="/contact" className={topShimmerButton} onClick={() => trackEvent("contact_click", { location: "nav" })}>
-                Contact us
-              </a>
-              <a href="/free-trial" className={topPrimaryButton} onClick={() => trackEvent("free_trial_click", { location: "nav" })}>
-                Start free trial
-              </a>
-              <button
-                type="button"
-                className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-700 transition-colors hover:bg-zinc-50"
-                onClick={() => setMobileMenuOpen((p) => !p)}
-                aria-label="Toggle menu"
-                aria-expanded={mobileMenuOpen}
-              >
-                {mobileMenuOpen ? (
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                ) : (
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                )}
-              </button>
-            </div>
-
-            {/* Mobile hamburger */}
-            <button
-              type="button"
-              className="inline-flex items-center justify-center rounded-lg p-2 text-zinc-700 hover:bg-zinc-100 lg:hidden"
-              onClick={() => setMobileMenuOpen((p) => !p)}
-              aria-label="Toggle menu"
-              aria-expanded={mobileMenuOpen}
-            >
-              {mobileMenuOpen ? (
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
-          </div>
-
-          {/* Mobile dropdown menu */}
-          {mobileMenuOpen && (
-            <div className="bg-white shadow-[0_20px_60px_rgba(0,0,0,0.08)]">
-              {/* Nav links */}
-              <div className="px-6 pt-5 pb-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400 mb-3">Navigate</p>
-                <div className="flex flex-col">
-                  {[
-                    { label: "How it works", href: "/#how-it-works" },
-                    { label: "Pricing", href: "/#pricing" },
-                    { label: "Blog", href: "/blog" },
-                    { label: "Contact", href: "/contact" },
-                  ].map((item) => (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      className="flex items-center justify-between py-3.5 border-b border-zinc-100 text-base font-medium text-zinc-800 hover:text-[#FF6B35] transition-colors"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {item.label}
-                      <svg className="h-4 w-4 text-zinc-300" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
-                    </a>
-                  ))}
-                </div>
-              </div>
-              {/* CTAs */}
-              <div className="px-6 pb-6 pt-2 flex flex-col gap-3">
-                <a
-                  href="/free-trial"
-                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#FF6B35] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#e85d2b]"
-                  onClick={() => { trackEvent("free_trial_click", { location: "nav" }); setMobileMenuOpen(false); }}
-                >
-                  Start free trial
-                </a>
-                <a
-                  href="/contact"
-                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-zinc-200 bg-zinc-50 px-5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100"
-                  onClick={() => { trackEvent("contact_click", { location: "nav" }); setMobileMenuOpen(false); }}
-                >
-                  Contact us
-                </a>
-              </div>
-            </div>
-          )}
-        </header>
+        <BlogHeader />
 
         <section id="hero-section" className="relative overflow-hidden pb-0 bg-white">
           {/* Two-column hero: text left, video right - bg matches video for seamless blend */}
           <div className="relative mx-auto max-w-7xl px-6 pt-12 lg:px-8 lg:pt-16">
-            <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-center lg:gap-12">
+            <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-center lg:gap-10 xl:gap-12">
               {/* Left: text */}
-              <div className="flex-1 text-center lg:text-left">
+              <div className="relative z-20 flex-1 text-center lg:flex-[1.12] lg:text-left">
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#FF6B35]">Each feature built from real experience</p>
                 <h1 className="mt-6 text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl lg:text-6xl">
-                  Stop using 5 apps to run one job!
+                  <span className="lg:whitespace-nowrap">The measure-up is done.</span>
+                  <br />
+                  The quote still isn&apos;t.
                 </h1>
-                <p className="mt-4 text-xl font-semibold text-zinc-700 sm:text-2xl">
+                <p className="mt-4 text-xl font-semibold leading-tight text-zinc-700 sm:text-2xl lg:whitespace-nowrap">
                   Measure. Quote. Order. Manage. Invoice. Get paid.
                 </p>
                 <p className="mt-4 max-w-xl text-base leading-7 text-zinc-600 sm:text-lg">
@@ -560,27 +392,45 @@ export default function HomePage() {
                   <a href="/free-trial" className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#FF6B35] px-7 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#e85d2b]" onClick={() => trackEvent("free_trial_click", { location: "hero" })}>
                     Start free trial
                   </a>
-                  <a href="https://calendly.com/quote-core-info/15-minute-meeting" target="_blank" rel="noopener noreferrer" className="pill-shimmer inline-flex min-h-11 items-center justify-center rounded-full border border-zinc-200 bg-white px-7 py-2.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50" onClick={() => trackEvent("book_call_click", { location: "hero" })}>
+                  <a href="https://calendly.com/quote-core-info/15-minute-meeting" target="_blank" rel="noopener noreferrer" className="pill-shimmer inline-flex min-h-11 items-center justify-center rounded-full border border-zinc-300 bg-white px-7 py-2.5 text-sm font-medium text-zinc-900 transition-colors duration-200 hover:border-[#FF6B35]/40" onClick={() => trackEvent("book_call_click", { location: "hero" })}>
                     Book a Call
                   </a>
                   <a
                     href="#how-it-works"
-                    className="pill-shimmer inline-flex min-h-11 items-center justify-center rounded-full border border-zinc-200 bg-white px-7 py-2.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50"
+                    className="pill-shimmer inline-flex min-h-11 items-center justify-center rounded-full border border-zinc-300 bg-white px-7 py-2.5 text-sm font-medium text-zinc-900 transition-colors duration-200 hover:border-[#FF6B35]/40"
                     onClick={(e) => { e.preventDefault(); document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' }); }}
                   >
                     How it works
                   </a>
                 </div>
-                <p className="mt-3 text-sm text-zinc-500">No card required. 14 days free.</p>
+                <p className="mt-3 text-sm text-zinc-500">Full Access 14 days free. No card required.</p>
               </div>
               {/* Right: laptop video - bg matches section so edges blend */}
-              <div className="flex-1 flex items-end justify-center lg:justify-end overflow-hidden">
+              <div className="relative z-10 flex flex-1 items-end justify-center overflow-visible lg:-ml-12 lg:flex-[0.96] lg:justify-end xl:flex-[1.08]">
+                <HeroFloatingCard
+                  icon="measure"
+                  title="Measure"
+                  description="Use plan measurements, roof areas, lengths and quantities."
+                  className="right-4 top-1 w-52 xl:right-8 xl:top-2"
+                />
+                <HeroFloatingCard
+                  icon="quote"
+                  title="Quote"
+                  description="Turn measurements into priced customer quotes."
+                  className="-right-1 top-[47%] w-48 -translate-y-1/2 2xl:-right-8"
+                />
+                <HeroFloatingCard
+                  icon="order"
+                  title="Order + Invoice"
+                  description="Create material orders, manage the job and invoice from the same workflow."
+                  className="bottom-3 left-[48%] w-56 -translate-x-1/2 translate-y-6"
+                />
                 <video
                   autoPlay
                   muted
                   playsInline
                   preload="auto"
-                  className="w-full hero-video-float"
+                  className="hero-video-float relative z-10 w-full max-w-none lg:w-[112%] lg:translate-x-4 xl:w-[120%] 2xl:w-[124%]"
                   style={{display: "block"}}
                 >
                   <source src="/qc-hero-laptop.mp4" type="video/mp4" />
@@ -614,7 +464,7 @@ export default function HomePage() {
                   preload="auto"
                   onTimeUpdate={handleVideoTimeUpdate}
                 >
-                  <source src="/QCPFinalVideoSmaller.mp4" type="video/mp4" />
+                  <source src="/kids-horizontal.mp4" type="video/mp4" />
                 </video>
                 {/* Progress bar - shows on hover */}
                 <div
@@ -669,7 +519,7 @@ export default function HomePage() {
         <ShaunQuoteBubble />
 
         {/* What is QuoteCore+? */}
-        <section id="what-is-quotecore" className="mx-auto max-w-7xl px-6 py-12 sm:py-16 lg:px-8">
+        <section id="what-is-quotecore" className="mx-auto w-full max-w-7xl px-6 py-12 sm:py-16 lg:px-8">
           <div className="relative overflow-hidden rounded-[2rem] bg-zinc-950 px-6 py-10 shadow-[0_30px_80px_rgba(0,0,0,0.15)] sm:px-10 sm:py-14">
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,107,53,0.12),transparent_55%)]" />
             <div className="relative">
@@ -698,8 +548,8 @@ export default function HomePage() {
         </section>
 
         {/* Smart ComponentsTM */}
-        <section id="smart-components" className="px-6 py-16 lg:px-8">
-          <div className="mx-auto max-w-7xl">
+        <section id="smart-components" className="py-12 lg:py-16">
+          <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
             <div className="flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-16">
               {/* Left: text content */}
               <div className="flex-1">
@@ -733,12 +583,12 @@ export default function HomePage() {
                 <p className="mt-8 text-base font-semibold leading-7 text-zinc-950 sm:text-lg">Make them once. Reuse them in seconds. Forever.</p>
                 <div className="mt-8 flex flex-wrap gap-4">
                   <a href="/free-trial" className="inline-flex items-center justify-center rounded-full bg-[#FF6B35] px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#e85d2b]">Start free trial</a>
-                  <a href="https://calendly.com/quote-core-info/15-minute-meeting" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-full border border-zinc-300 bg-white px-7 py-3 text-sm font-semibold text-zinc-800 transition-colors hover:bg-zinc-50">Book a call</a>
+                  <a href="https://calendly.com/quote-core-info/15-minute-meeting" target="_blank" rel="noopener noreferrer" className="pill-shimmer inline-flex items-center justify-center rounded-full border border-zinc-300 bg-white px-7 py-3 text-sm font-medium text-zinc-900 transition-colors duration-200 hover:border-[#FF6B35]/40">Book a call</a>
                 </div>
               </div>
               {/* Right: overlapping laptop mockups */}
               <div className="flex-1 flex items-center justify-center">
-                <div className="relative w-full max-w-xl" style={{ minHeight: "340px" }}>
+                <div className="relative min-h-[190px] w-full max-w-xl sm:min-h-[260px] lg:min-h-[340px]">
                   {/* Back image - offset top-right */}
                   <div
                     className="absolute left-1/2 top-0 w-full -translate-x-1/2 transition-transform duration-500 ease-out hover:scale-[1.03] hover:-translate-y-2 md:left-auto md:-right-8 md:-top-8 md:w-[102%] md:translate-x-0"
@@ -767,7 +617,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section id="how-it-works" className="mx-auto max-w-7xl px-6 py-24 lg:px-8">
+        <section id="how-it-works" className="mx-auto w-full max-w-7xl px-6 py-14 lg:px-8 lg:py-24">
           <div className="text-center mb-12">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">How it works</p>
             <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
@@ -850,6 +700,185 @@ export default function HomePage() {
           </div>
         </section>
 
+        <section id="tutorials" className="overflow-hidden bg-white pb-16">
+          <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
+            <div className="mb-10 max-w-2xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#FF6B35]">Tutorials</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl">
+                Watch <span className="brand-wordmark">QuoteCore<span className="brand-plus">+</span></span> in action
+              </h2>
+              <p className="mt-4 text-base leading-7 text-zinc-600 sm:text-lg">
+                Quick step-by-step tutorials to help you set up components, build quotes, and create material orders with confidence.
+              </p>
+            </div>
+
+            <div className="relative hidden lg:block">
+              {tutorialPages.length > 1 ? (
+                <button
+                  type="button"
+                  onClick={showPreviousTutorial}
+                  className="absolute -left-4 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-800 shadow-[0_14px_40px_rgba(15,23,42,0.10)] transition-colors hover:bg-zinc-50 lg:flex"
+                  aria-label="Previous tutorial"
+                >
+                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M15 18l-6-6 6-6" />
+                  </svg>
+                </button>
+              ) : null}
+
+              <div className="overflow-visible py-5">
+                <div
+                  className="flex gap-6 transition-transform duration-500 ease-out"
+                  style={{ transform: `translateX(-${tutorialOffsetIndex * tutorialTranslatePercent}%)` }}
+                >
+                  {tutorials.map((tutorial) => (
+                    <a
+                      key={tutorial.title}
+                      href={tutorial.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex min-h-[285px] w-[calc(25%_-_18px)] flex-none flex-col rounded-2xl border border-zinc-200 bg-white p-2 shadow-[0_10px_35px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-[#FF6B35]/35 hover:shadow-[0_18px_45px_rgba(15,23,42,0.10)]"
+                    >
+                      <div className="overflow-hidden rounded-xl border border-zinc-100 bg-zinc-50">
+                        <img
+                          src={tutorial.image}
+                          alt={tutorial.title}
+                          className="aspect-video h-auto w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        />
+                      </div>
+                      <div className="flex flex-1 flex-col px-3 pb-4 pt-4">
+                        <h3 className="min-h-[58px] text-base font-semibold leading-snug text-zinc-950">{tutorial.title}</h3>
+                        <p className="mt-auto inline-flex items-center gap-2 pt-3 text-sm font-medium text-[#FF6B35]">
+                          Watch on YouTube
+                          <svg viewBox="0 0 24 24" className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12h14" />
+                            <path d="M13 6l6 6-6 6" />
+                          </svg>
+                        </p>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {tutorialPages.length > 1 ? (
+                <button
+                  type="button"
+                  onClick={showNextTutorial}
+                  className="absolute -right-4 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-zinc-200 bg-white text-[#FF6B35] shadow-[0_14px_40px_rgba(15,23,42,0.10)] transition-colors hover:bg-zinc-50 lg:flex"
+                  aria-label="Next tutorial"
+                >
+                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </button>
+              ) : null}
+            </div>
+
+            <div className="lg:hidden">
+              <a
+                href={tutorials[activeTutorial]?.href ?? tutorials[0].href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group mx-auto flex min-h-[330px] w-[88%] max-w-[360px] flex-col rounded-2xl border border-zinc-200 bg-white p-2 shadow-[0_10px_35px_rgba(15,23,42,0.05)] transition-all duration-300 hover:border-[#FF6B35]/35"
+              >
+                <div className="overflow-hidden rounded-xl border border-zinc-100 bg-zinc-50">
+                  <img
+                    src={tutorials[activeTutorial]?.image ?? tutorials[0].image}
+                    alt={tutorials[activeTutorial]?.title ?? tutorials[0].title}
+                    className="aspect-video h-auto w-full object-cover"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col px-4 pb-4 pt-4">
+                  <h3 className="min-h-[74px] text-lg font-semibold leading-tight text-zinc-950">
+                    {tutorials[activeTutorial]?.title ?? tutorials[0].title}
+                  </h3>
+                  <p className="mt-auto inline-flex items-center gap-3 pt-3 text-base font-medium text-[#FF6B35]">
+                    Watch on YouTube
+                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M5 12h14" />
+                      <path d="M13 6l6 6-6 6" />
+                    </svg>
+                  </p>
+                </div>
+              </a>
+            </div>
+
+            {tutorialPages.length > 1 ? (
+              <div className="mt-8 flex items-center justify-center gap-2">
+                {tutorialPages.map((index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => setActiveTutorial(index)}
+                    className={`h-1.5 rounded-full transition-all ${
+                      index === tutorialOffsetIndex ? "w-16 bg-[#FF6B35]" : "w-16 bg-zinc-200 hover:bg-zinc-300"
+                    }`}
+                    aria-label={`Show tutorial set ${index + 1}`}
+                    aria-current={index === tutorialOffsetIndex ? "true" : undefined}
+                  />
+                ))}
+              </div>
+            ) : null}
+
+            <div className="mt-5 flex justify-center gap-3 lg:hidden">
+              <button
+                type="button"
+                onClick={showPreviousTutorial}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-800 shadow-sm"
+                aria-label="Previous tutorial"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={showNextTutorial}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-900 text-white shadow-sm"
+                aria-label="Next tutorial"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="services" className="bg-white pb-16">
+          <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
+            <div className="relative overflow-hidden rounded-[2rem] border border-[#FF6B35]/20 bg-[radial-gradient(circle_at_18%_20%,rgba(255,107,53,0.10),transparent_34%),linear-gradient(135deg,#fff_0%,#fff7f3_48%,#fff_100%)] p-6 shadow-[0_24px_80px_rgba(15,23,42,0.08)] sm:p-8 lg:p-10">
+              <div className="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr]">
+                <div className="relative z-10">
+                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#FF6B35]">Services</p>
+                  <h2 className="mt-4 max-w-xl text-3xl font-semibold leading-tight text-zinc-950 sm:text-4xl">
+                    Send us the plans,
+                    <span className="block text-[#FF6B35]">We&apos;ll measure and build the quote.</span>
+                  </h2>
+                  <div className="mt-4 h-0.5 w-16 rounded-full bg-[#FF6B35]" />
+                  <p className="mt-6 max-w-xl text-base leading-7 text-zinc-600 sm:text-lg">
+                    Short on time? Our team can handle the takeoff for you. We&apos;ll measure from your plans, build the quote using your pricing, and deliver it back-fast and accurate.
+                  </p>
+                  <a
+                    href="/services"
+                    className="mt-8 inline-flex min-h-11 items-center justify-center gap-3 rounded-full bg-[#FF6B35] px-7 py-2.5 text-sm font-semibold text-white shadow-[0_14px_32px_rgba(255,107,53,0.24)] transition-colors hover:bg-[#e85d2b]"
+                    onClick={() => trackEvent("services_click", { location: "home_services" })}
+                  >
+                    Find out more
+                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M5 12h14" />
+                      <path d="M13 6l6 6-6 6" />
+                    </svg>
+                  </a>
+                </div>
+
+                <ServicesPlanGraphic />
+              </div>
+            </div>
+          </div>
+        </section>
+
 
 
               {/* Rolling banner + CTA */}
@@ -876,15 +905,15 @@ export default function HomePage() {
           <div className="min-w-0 flex-1 sm:flex-none">
             <p className="mb-3 text-sm text-zinc-500 sm:mb-2">Book a 15-minute call with Shaun</p>
             <div className="grid max-w-xs grid-cols-1 gap-2 sm:flex sm:max-w-none sm:gap-3">
-              <a href="https://calendly.com/quote-core-info/15-minute-meeting" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center justify-center rounded-full bg-[#FF6B35] px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#e85d2b] sm:min-h-9 sm:px-6" onClick={() => trackEvent("book_call_click", { location: "mid" })}>Book a Call</a>
-              <a href="/free-trial" className="pill-shimmer inline-flex min-h-10 items-center justify-center rounded-full border border-zinc-300 bg-white px-5 py-2 text-sm font-semibold text-zinc-800 transition-colors hover:bg-zinc-50 sm:min-h-9 sm:px-6" onClick={() => trackEvent("free_trial_click", { location: "mid" })}>Start free trial</a>
+              <a href="https://calendly.com/quote-core-info/15-minute-meeting" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#FF6B35] px-7 py-3 text-base font-semibold text-white transition-colors hover:bg-[#e85d2b] sm:min-h-11 sm:px-8" onClick={() => trackEvent("book_call_click", { location: "mid" })}>Book a Call</a>
+              <a href="/free-trial" className="pill-shimmer inline-flex min-h-12 items-center justify-center rounded-full border border-zinc-300 bg-white px-7 py-3 text-sm font-medium text-zinc-900 transition-colors duration-200 hover:border-[#FF6B35]/40 sm:min-h-11 sm:px-8" onClick={() => trackEvent("free_trial_click", { location: "mid" })}>Start free trial</a>
             </div>
           </div>
         </div>
 
         {/* About Shaun */}
         <section className="bg-[#FF6B35]/5 py-16">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
             <div className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-[0_20px_80px_rgba(0,0,0,0.06)]">
               <div className="grid lg:grid-cols-2">
                 <div className="flex flex-col justify-center p-10">
@@ -917,8 +946,8 @@ export default function HomePage() {
         </section>
 
         {/* Tell us what you need */}
-        <section className="bg-[#FF6B35]/10 px-6 pt-14 pb-8 lg:px-8">
-          <div className="mx-auto max-w-7xl">
+        <section className="bg-[#FF6B35]/10 pt-14 pb-8">
+          <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
             <div className="rounded-[2rem] bg-zinc-950 p-2 shadow-[0_22px_55px_rgba(255,107,53,0.22)]">
               <div className="relative overflow-hidden rounded-[1.6rem] border border-[#FF6B35]/35 bg-[radial-gradient(circle_at_15%_0%,rgba(255,255,255,0.12),transparent_30%),linear-gradient(135deg,#242424_0%,#111318_58%,#090a0d_100%)] px-8 py-10 sm:px-12 lg:flex lg:items-center lg:justify-between lg:gap-12 lg:px-14 lg:py-12">
                 <div className="relative max-w-3xl">
@@ -953,7 +982,7 @@ export default function HomePage() {
 
         {/* Testimonials */}
         <section className="bg-[#FF6B35]/10 pt-4 pb-12">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
             <div className="text-center">
               <h2 className="text-3xl font-semibold text-zinc-950 sm:text-4xl">What users say</h2>
             </div>
@@ -963,7 +992,7 @@ export default function HomePage() {
                 <li key={idx}>
                   <blockquote>
                     <p>&ldquo;{t.quote}&rdquo;</p>
-                    <footer>{t.name}, {t.business}</footer>
+                    <footer>{t.business ? `${t.name}, ${t.business}` : t.name}</footer>
                   </blockquote>
                 </li>
               ))}
@@ -990,7 +1019,7 @@ export default function HomePage() {
                           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FF6B35] text-xs font-semibold text-white">{carouselMounted ? t.initials : null}</div>
                           <div>
                             <p className="text-sm font-semibold text-zinc-950">{carouselMounted ? t.name : null}</p>
-                            <p className="text-xs text-zinc-400">{carouselMounted ? t.business : null}</p>
+                            {carouselMounted && t.business ? <p className="text-xs text-zinc-400">{t.business}</p> : null}
                           </div>
                         </div>
                       </div>
@@ -1034,7 +1063,7 @@ export default function HomePage() {
                           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FF6B35] text-xs font-semibold text-white">{carouselMounted ? t.initials : null}</div>
                           <div>
                             <p className="text-sm font-semibold text-zinc-950">{carouselMounted ? t.name : null}</p>
-                            <p className="text-xs text-zinc-400">{carouselMounted ? t.business : null}</p>
+                            {carouselMounted && t.business ? <p className="text-xs text-zinc-400">{t.business}</p> : null}
                           </div>
                         </div>
                       </div>
@@ -1054,7 +1083,7 @@ export default function HomePage() {
 
         {/* PRICING SECTION */}
         <section id="pricing" className="bg-zinc-950 py-24 text-white">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#FF8A61]">Pricing</p>
@@ -1069,7 +1098,7 @@ export default function HomePage() {
             </div>
 
             <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {newPricingPlans.map((plan) => (
+              {pricingPlans.map((plan) => (
                 <div
                   key={plan.name}
                   className={`relative flex flex-col rounded-[2rem] border p-8 ${
@@ -1132,6 +1161,9 @@ export default function HomePage() {
               VAT calculated at checkout where applicable.
             </p>
             <p className="mt-3 text-center text-sm text-zinc-400">
+              USD and GBP pricing available. UK visitors are shown GBP automatically.
+            </p>
+            <p className="mt-3 text-center text-sm text-zinc-400">
               Not sure which plan fits?{" "}
               <a
                 href="https://calendly.com/quote-core-info/15-minute-meeting"
@@ -1147,14 +1179,14 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-6 py-24 lg:px-8">
+        <section className="mx-auto w-full max-w-7xl px-6 py-24 lg:px-8">
           <div className="rounded-[2rem] border border-zinc-200 bg-white p-8 shadow-[0_20px_80px_rgba(0,0,0,0.06)]">
             <div className="max-w-4xl">
               <h2 className="text-3xl font-semibold sm:text-4xl">Frequently asked Questions</h2>
             </div>
 
             <div className="mt-10 space-y-4">
-              {faqs.map((faq) => (
+              {homepageFaqs.map((faq) => (
                 <FaqItem key={faq.question} question={faq.question} answer={faq.answer} />
               ))}
             </div>
@@ -1211,7 +1243,7 @@ export default function HomePage() {
                       href="https://calendly.com/quote-core-info/15-minute-meeting"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="pill-shimmer inline-flex min-h-14 items-center justify-center rounded-full border border-zinc-300 bg-white px-9 text-base font-medium text-zinc-700 transition-colors hover:bg-zinc-50"
+                      className="pill-shimmer inline-flex min-h-14 items-center justify-center rounded-full border border-zinc-300 bg-white px-9 text-sm font-medium text-zinc-900 transition-colors duration-200 hover:border-[#FF6B35]/40"
                       onClick={() => trackEvent("book_call_click", { location: "bottom" })}
                     >
                       Book a Call
@@ -1235,29 +1267,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <footer className="border-t border-zinc-200 py-10 text-center text-sm text-zinc-500">
-          <p className="mb-4 text-xs text-zinc-400"><span className="brand-wordmark">QuoteCore<span className="brand-plus">+</span></span> is quoting software for contractors and trade businesses.</p>
-          <p>
-            <a href="/" className="hover:text-zinc-800">Home</a>
-            {" · "}
-            <a href="/#pricing" className="hover:text-zinc-800">Pricing</a>
-            {" · "}
-            <a href="/blog" className="hover:text-zinc-800">Blog</a>
-            {" · "}
-            <a href="/contact" className="hover:text-zinc-800">Contact</a>
-            {" · "}
-            <a href="/free-trial" className="hover:text-zinc-800">Free Trial</a>
-            {" · "}
-            <a href="/privacy" className="hover:text-zinc-800">Privacy Policy</a>
-            {" · "}
-            <a href="/terms" className="hover:text-zinc-800">Terms &amp; Conditions</a>
-            {" · "}
-            <a href="/cookie-policy" className="hover:text-zinc-800">Cookie Policy</a>
-          </p>
-          <p className="mt-3">© 2026 <span className="brand-wordmark">QuoteCore<span className="brand-plus">+</span></span></p>
-          <p className="mt-1">Built by <a href="https://t3labs.tech" className="hover:text-zinc-800">T3 Labs</a></p>
-          <SocialIcons />
-        </footer>
+        <SiteFooter />
       </main>
 
       {/* Quote lightbox - full screen with scroll */}
@@ -1290,6 +1300,23 @@ export default function HomePage() {
         }
         .hero-video-float:hover {
           transform: scale(1.03) translateY(-8px);
+        }
+        .hero-floating-card {
+          animation: heroCardFloat 6.5s ease-in-out var(--hero-card-delay, 0s) infinite;
+          will-change: transform;
+        }
+        @keyframes heroCardFloat {
+          0%, 100% {
+            transform: translate3d(0, 0, 0);
+          }
+          50% {
+            transform: translate3d(0, -8px, 0);
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .hero-floating-card {
+            animation: none;
+          }
         }
         .brand-wordmark {
           white-space: nowrap;
@@ -1344,6 +1371,113 @@ export default function HomePage() {
         }
       `}</style>
     </>
+  );
+}
+
+function ServicesPlanGraphic() {
+  return (
+    <div className="relative mx-auto hidden min-h-[320px] w-full max-w-[620px] items-center justify-center md:flex sm:min-h-[360px]">
+      <div className="absolute inset-0 rounded-[2rem] bg-white/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]" />
+      <div className="absolute right-8 top-6 hidden text-[11px] font-semibold text-[#FF6B35] sm:block">9.15m</div>
+      <div className="absolute left-10 top-24 hidden -rotate-90 text-[11px] font-semibold text-[#FF6B35] sm:block">6.1m</div>
+      <div className="absolute left-[17%] top-[13%] hidden h-px w-[48%] bg-[#FF6B35]/65 sm:block before:absolute before:left-0 before:top-1/2 before:h-3 before:w-px before:-translate-y-1/2 before:bg-[#FF6B35] after:absolute after:right-0 after:top-1/2 after:h-3 after:w-px after:-translate-y-1/2 after:bg-[#FF6B35]" />
+      <div className="absolute left-[16%] top-[25%] hidden h-[44%] w-px bg-[#FF6B35]/65 sm:block before:absolute before:left-1/2 before:top-0 before:h-px before:w-3 before:-translate-x-1/2 before:bg-[#FF6B35] after:absolute after:bottom-0 after:left-1/2 after:h-px after:w-3 after:-translate-x-1/2 after:bg-[#FF6B35]" />
+
+      <div className="relative w-[82%] max-w-[430px] rotate-[-4deg] overflow-hidden rounded-2xl border border-zinc-200/80 bg-white/75 p-4 opacity-85 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur">
+        <img
+          src="/services-roof-plan.png"
+          alt="Roof plan measurement example"
+          className="h-auto w-full"
+        />
+      </div>
+
+      <div className="absolute right-3 top-1/2 z-10 w-[76%] max-w-[260px] -translate-y-1/2 rounded-2xl border border-zinc-200 bg-white p-5 shadow-[0_20px_55px_rgba(15,23,42,0.14)] sm:right-8">
+        <p className="text-base font-semibold text-zinc-950">Quote summary</p>
+        <div className="mt-5 space-y-4 text-sm">
+          <div className="flex items-center justify-between gap-4 border-b border-zinc-100 pb-3">
+            <span className="text-zinc-500">Total material</span>
+            <span className="font-semibold text-zinc-800">$9,057</span>
+          </div>
+          <div className="flex items-center justify-between gap-4 border-b border-zinc-100 pb-3">
+            <span className="text-zinc-500">Total labour</span>
+            <span className="font-semibold text-zinc-800">$3,429</span>
+          </div>
+          <div className="flex items-center justify-between gap-4">
+            <span className="font-semibold text-zinc-950">Total</span>
+            <span className="font-semibold text-[#FF6B35]">$12,486</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function HeroFloatingCard({
+  icon,
+  title,
+  description,
+  className,
+}: {
+  icon: "measure" | "quote" | "order";
+  title: string;
+  description: string;
+  className: string;
+}) {
+  const floatDelay = icon === "quote" ? "1.2s" : icon === "order" ? "2.2s" : "0s";
+
+  return (
+    <div
+      className={`pointer-events-none absolute z-30 hidden xl:block ${className}`}
+      aria-hidden="true"
+    >
+      <div
+        className="hero-floating-card rounded-xl border border-zinc-200/80 bg-white/95 p-3 shadow-[0_14px_42px_rgba(15,23,42,0.12)] backdrop-blur-md"
+        style={{"--hero-card-delay": floatDelay} as React.CSSProperties}
+      >
+        <div className="flex items-start gap-2.5">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#FF6B35]/10 text-[#FF6B35]">
+            <HeroFloatingIcon type={icon} />
+          </span>
+          <span className="min-w-0">
+            <span className="block text-sm font-semibold leading-5 text-zinc-950">{title}</span>
+            <span className="mt-0.5 block text-xs leading-4 text-zinc-600">{description}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function HeroFloatingIcon({type}: {type: "measure" | "quote" | "order"}) {
+  if (type === "measure") {
+    return (
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 17 17 4l3 3L7 20l-3-3Z" />
+        <path d="m14 7 3 3" />
+        <path d="m11 10 2 2" />
+        <path d="m8 13 3 3" />
+      </svg>
+    );
+  }
+
+  if (type === "quote") {
+    return (
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 3h8l4 4v14H6V3Z" />
+        <path d="M14 3v5h5" />
+        <path d="M9 12h6" />
+        <path d="M9 16h6" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M5 6h2l1.2 8.4a2 2 0 0 0 2 1.6h6.9a2 2 0 0 0 1.9-1.4L21 8H8" />
+      <path d="M10 20h.01" />
+      <path d="M18 20h.01" />
+      <path d="M12 8h4" />
+    </svg>
   );
 }
 

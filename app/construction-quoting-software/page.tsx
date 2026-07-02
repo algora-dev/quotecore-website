@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import BlogHeader from "@/components/BlogHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
@@ -204,21 +205,7 @@ export default function ConstructionQuotingSoftwarePage() {
       />
 
       <main className="min-h-screen bg-white text-zinc-950">
-        {/* Header */}
-        <header className="sticky top-0 z-50 border-b border-white/60 bg-white/68 shadow-[0_8px_30px_rgba(255,255,255,0.25)_inset,0_12px_40px_rgba(0,0,0,0.05)] backdrop-blur-[24px]">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-            <a href="/" className="flex items-center gap-3">
-              <img src="/MainQCP.png" alt="QuoteCore+" className="h-10 w-auto" />
-            </a>
-
-            <a
-              href="/free-trial"
-              className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#FF6B35] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#e85d2b]"
-            >
-              Start free trial
-            </a>
-          </div>
-        </header>
+        <BlogHeader />
 
         {/* Hero */}
         <section className="relative overflow-hidden pb-16 pt-12">
@@ -258,7 +245,7 @@ export default function ConstructionQuotingSoftwarePage() {
                 href="https://calendly.com/quote-core-info/15-minute-meeting"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-12 items-center justify-center rounded-full border border-zinc-200 bg-white px-8 py-3 text-base font-semibold text-zinc-700 transition-colors hover:bg-zinc-50"
+                className="pill-shimmer inline-flex min-h-12 items-center justify-center rounded-full border border-zinc-300 bg-white px-8 py-3 text-sm font-medium text-zinc-900 transition-colors duration-200 hover:border-[#FF6B35]/40"
               >
                 Book a 15-minute call
               </a>
@@ -534,7 +521,7 @@ export default function ConstructionQuotingSoftwarePage() {
             href="/free-trial"
             className="mt-10 inline-flex min-h-12 items-center justify-center rounded-full bg-[#FF6B35] px-10 py-3 text-base font-semibold text-white transition-colors hover:bg-[#e85d2b]"
           >
-            Start your free 14-day trial →
+            Start your free 14-day trial
           </a>
 
           <p className="mt-4 text-sm text-zinc-400">No card required. 14 days free.</p>

@@ -4,6 +4,7 @@ import FreeTrialClient from "./client";
 import FreeTrialFaqPanel from "./FreeTrialFaqPanel";
 import SiteFooter from "@/components/SiteFooter";
 import BlogHeader from "@/components/BlogHeader";
+import { buildBreadcrumbSchema, buildFaqSchema, siteUrl } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Free 14-Day Trial - No Card Required | QuoteCore+",
@@ -52,18 +53,32 @@ const faqs = [
   },
 ];
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((f) => ({
-    "@type": "Question",
-    name: f.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: f.answer,
-    },
-  })),
-};
+function TrialBenefitIcon({ type }: { type: "lock" | "calendar" | "pause" }) {
+  if (type === "lock") {
+    return (
+      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M7 11V8.5A5 5 0 0 1 16.6 6.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        <path d="M6.5 11h11A1.5 1.5 0 0 1 19 12.5v6A1.5 1.5 0 0 1 17.5 20h-11A1.5 1.5 0 0 1 5 18.5v-6A1.5 1.5 0 0 1 6.5 11Z" stroke="currentColor" strokeWidth="1.8" />
+      </svg>
+    );
+  }
+
+  if (type === "calendar") {
+    return (
+      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M7 4v3M17 4v3M5 9h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        <path d="M6.5 6h11A1.5 1.5 0 0 1 19 7.5v10A1.5 1.5 0 0 1 17.5 19h-11A1.5 1.5 0 0 1 5 17.5v-10A1.5 1.5 0 0 1 6.5 6Z" stroke="currentColor" strokeWidth="1.8" />
+        <path d="M10 13h4M12 11v4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M9 7v10M15 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
 
 function TrialPreviewImages() {
   return (
@@ -78,7 +93,7 @@ function TrialPreviewImages() {
         />
       </div>
 
-      <div className="absolute bottom-8 right-1 z-20 w-[86%] rotate-1 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.16)] transition duration-300 ease-out hover:bottom-10 hover:rotate-0 hover:scale-[1.03] hover:shadow-[0_34px_90px_rgba(15,23,42,0.22)]">
+      <div className="absolute bottom-20 right-1 z-20 w-[86%] rotate-1 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.16)] transition duration-300 ease-out hover:bottom-24 hover:rotate-0 hover:scale-[1.03] hover:shadow-[0_34px_90px_rgba(15,23,42,0.22)]">
         <img
           src="/free-trial-order-layout.png"
           alt="QuoteCore+ order layout preview"
@@ -95,53 +110,67 @@ export default function FreeTrialPage() {
       <Script
         id="free-trial-faq-schema"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(faqs)) }}
+      />
+      <Script
+        id="free-trial-breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(buildBreadcrumbSchema([
+            { name: "Home", url: `${siteUrl}/` },
+            { name: "Free Trial", url: `${siteUrl}/free-trial` },
+          ])),
+        }}
       />
       <main className="min-h-screen bg-white text-zinc-950">
         <BlogHeader backLabel="Back to homepage" backHref="/" />
 
         <section className="relative overflow-hidden bg-[linear-gradient(180deg,#fff_0%,#fff7f2_52%,#fff_100%)]">
-          <div className="relative mx-auto grid max-w-[92rem] gap-10 px-6 py-12 lg:grid-cols-[1fr_0.68fr] lg:px-8 lg:py-16 xl:grid-cols-[0.98fr_0.58fr_0.95fr] xl:gap-8">
-            <div className="xl:pt-8">
+          <div className="relative mx-auto grid w-full max-w-7xl gap-10 px-6 py-12 lg:grid-cols-[1fr_0.68fr] lg:px-8 lg:py-16 xl:grid-cols-[0.98fr_0.58fr_0.95fr] xl:gap-8">
+            <div className="xl:pt-6">
               <p className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-[#FF6B35] shadow-sm">
                 <span className="text-base leading-none">*</span>
                 14-day free trial
               </p>
-              <h1 className="mt-8 max-w-2xl text-5xl font-semibold tracking-tight sm:text-6xl lg:text-7xl">
+              <h1 className="mt-6 max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
                 Try QuoteCore+ free for 14 days.
               </h1>
 
-              <p className="mt-7 max-w-2xl text-2xl font-semibold leading-tight text-zinc-700 sm:text-3xl">
+              <p className="mt-4 max-w-2xl text-xl font-semibold leading-snug text-zinc-700 sm:text-2xl">
                 Test the full quoting workflow.
                 <br />
                 No card. No commitment.
               </p>
 
-              <p className="mt-6 max-w-xl text-lg leading-8 text-zinc-600 sm:text-xl">
+              <p className="mt-4 max-w-xl text-base leading-7 text-zinc-600 sm:text-lg">
                 See how fast you can go from measurement to customer-ready quote before you spend a penny.
               </p>
 
               <div className="mt-10 max-w-xl space-y-6 text-zinc-600 hidden" aria-hidden="true">
-                {/* SEO content — moved to FAQ section */}
+                {/* SEO content - moved to FAQ section */}
               </div>
 
               <FreeTrialClient />
 
-              <div className="mt-8 hidden max-w-xl grid-cols-1 gap-4 text-sm text-zinc-500 sm:grid sm:grid-cols-3 sm:gap-6">
+              <div className="mt-8 hidden max-w-xl overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-[0_22px_70px_rgba(15,23,42,0.08)] sm:grid sm:grid-cols-3">
                 {[
-                  ["Full access", "All features included"],
-                  ["14 days", "Risk-free trial"],
-                  ["Pause anytime", "No charges"],
-                ].map(([title, text]) => (
-                  <div key={title} className="flex flex-col items-start gap-2">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[#FF6B35] shadow-[0_12px_34px_rgba(15,23,42,0.08)]">
-                      <svg className="h-5 w-5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                        <path d="M10 4v12M4 10h12" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-                      </svg>
+                  { title: "Full access", text: "All features included", icon: "lock" as const },
+                  { title: "14 days", text: "Risk-free trial", icon: "calendar" as const },
+                  { title: "Pause anytime", text: "No charges", icon: "pause" as const },
+                ].map(({ title, text, icon }, index) => (
+                  <div
+                    key={title}
+                    className={[
+                      "flex flex-col items-center justify-start px-7 py-7 text-center",
+                      index > 0 ? "border-l border-zinc-200" : "",
+                    ].join(" ")}
+                  >
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#FF6B35]/10 text-[#FF6B35]">
+                      <TrialBenefitIcon type={icon} />
                     </span>
-                    <span>
-                      <span className="block whitespace-nowrap font-semibold text-zinc-950">{title}</span>
-                      <span className="block whitespace-nowrap">{text}</span>
+                    <span className="mt-4">
+                      <span className="block whitespace-nowrap text-sm font-semibold text-zinc-950">{title}</span>
+                      <span className="mt-1 block whitespace-nowrap text-sm text-zinc-500">{text}</span>
                     </span>
                   </div>
                 ))}

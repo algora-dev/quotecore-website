@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import BlogHeader from "@/components/BlogHeader";
 import SiteFooter from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
@@ -130,27 +131,13 @@ export default function RoofingQuotingSoftwarePage() {
       />
 
       <main className="min-h-screen bg-white text-zinc-950">
-        {/* Header */}
-        <header className="sticky top-0 z-50 border-b border-white/60 bg-white/68 shadow-[0_8px_30px_rgba(255,255,255,0.25)_inset,0_12px_40px_rgba(0,0,0,0.05)] backdrop-blur-[24px]">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-            <a href="/" className="flex items-center gap-3">
-              <img src="/MainQCP.png" alt="QuoteCore+" className="h-10 w-auto" />
-            </a>
-
-            <a
-              href="/free-trial"
-              className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#FF6B35] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#e85d2b]"
-            >
-              Start free trial
-            </a>
-          </div>
-        </header>
+        <BlogHeader />
 
         {/* Cross-trade notice */}
         <div className="border-b border-zinc-200 bg-zinc-50 px-6 py-3 text-center text-sm text-zinc-600">
           QuoteCore+ also works across cladding, flooring, fencing, landscaping, and other construction trades.{" "}
           <a href="/construction-quoting-software" className="font-medium text-[#FF6B35] hover:underline">
-            See the full construction quoting software page →
+            See the full construction quoting software page
           </a>
         </div>
 

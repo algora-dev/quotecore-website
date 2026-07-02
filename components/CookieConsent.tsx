@@ -57,7 +57,7 @@ export default function CookieConsent() {
   useEffect(() => {
     const existing = getConsent();
     if (!existing) {
-      setShowBanner(true);
+      queueMicrotask(() => setShowBanner(true));
       return;
     }
     // Reapply saved consent on every page load
@@ -114,14 +114,14 @@ export default function CookieConsent() {
               <button
                 type="button"
                 onClick={() => apply(false, false)}
-                className="rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50"
+                className="pill-shimmer rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-900 transition-colors duration-200 hover:border-[#FF6B35]/40"
               >
                 Reject optional
               </button>
               <button
                 type="button"
                 onClick={openModal}
-                className="rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50"
+                className="pill-shimmer rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-900 transition-colors duration-200 hover:border-[#FF6B35]/40"
               >
                 Manage choices
               </button>
@@ -218,7 +218,7 @@ export default function CookieConsent() {
               <button
                 type="button"
                 onClick={() => apply(false, false)}
-                className="rounded-full border border-zinc-300 px-5 py-2.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50"
+                className="pill-shimmer rounded-full border border-zinc-300 bg-white px-5 py-2.5 text-sm font-medium text-zinc-900 transition-colors duration-200 hover:border-[#FF6B35]/40"
               >
                 Reject optional
               </button>

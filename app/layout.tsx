@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import AttributionTracker from "@/components/AttributionTracker";
 import CookieConsent from "@/components/CookieConsent";
 import SiteAssistant from "@/components/SiteAssistant";
+import { buildBreadcrumbSchema, buildSoftwareApplicationSchema, organizationId, siteUrl, websiteId } from "@/lib/schema";
 
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -40,11 +41,11 @@ const combinedSchema = {
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "https://quote-core.com/#organization",
+      "@id": organizationId,
       name: "QuoteCore+",
       alternateName: ["QuoteCore", "Quote Core", "Quote Core Plus", "QuoteCore Plus"],
-      url: "https://quote-core.com/",
-      logo: "https://quote-core.com/MainQCP.png",
+      url: `${siteUrl}/`,
+      logo: `${siteUrl}/MainQCP.png`,
       contactPoint: {
         "@type": "ContactPoint",
         email: "info@quote-core.com",
@@ -58,50 +59,15 @@ const combinedSchema = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://quote-core.com/#website",
+      "@id": websiteId,
       name: "QuoteCore+",
-      url: "https://quote-core.com/",
+      url: `${siteUrl}/`,
       publisher: {
-        "@id": "https://quote-core.com/#organization",
+        "@id": organizationId,
       },
     },
-    {
-      "@type": "SoftwareApplication",
-      "@id": "https://quote-core.com/#software",
-      name: "QuoteCore+",
-      alternateName: ["QuoteCore", "Quote Core", "Quote Core Plus", "QuoteCore Plus"],
-      applicationCategory: "BusinessApplication",
-      operatingSystem: "Web",
-      description: "Quoting software for contractors and trade businesses, including digital takeoff, quote building, approval tracking, materials ordering, and quote-to-job workflow.",
-      url: "https://quote-core.com/",
-      publisher: {
-        "@id": "https://quote-core.com/#organization",
-      },
-      offers: {
-        "@type": "AggregateOffer",
-        url: "https://quote-core.com/#pricing",
-        priceCurrency: "USD",
-        lowPrice: "19",
-        highPrice: "59",
-        offerCount: 3,
-        offers: [
-          { "@type": "Offer", name: "Starter", price: "19", priceCurrency: "USD", url: "https://quote-core.com/#pricing" },
-          { "@type": "Offer", name: "Growth", price: "39", priceCurrency: "USD", url: "https://quote-core.com/#pricing" },
-          { "@type": "Offer", name: "Pro", price: "59", priceCurrency: "USD", url: "https://quote-core.com/#pricing" },
-        ],
-      },
-    },
-    {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: "https://quote-core.com/",
-        },
-      ],
-    },
+    buildSoftwareApplicationSchema(),
+    buildBreadcrumbSchema([{ name: "Home", url: `${siteUrl}/` }], false),
   ],
 };
 
@@ -123,7 +89,7 @@ export default function RootLayout({
         <AttributionTracker />
         <CookieConsent />
         <SiteAssistant />
-        {/* Google Analytics 4 — loads gtag.js with Consent Mode default denied.
+        {/* Google Analytics 4 - loads gtag.js with Consent Mode default denied.
             Optional tracking scripts (Clarity, Meta Pixel, LinkedIn) are
             loaded conditionally by CookieConsent after user accepts. */}
         <Script

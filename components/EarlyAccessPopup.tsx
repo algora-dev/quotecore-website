@@ -147,7 +147,7 @@ export default function EarlyAccessPopup({ forceOpen, onClose }: Props = {}) {
               <h2 className="mt-5 text-4xl font-bold leading-[1.08] tracking-tight text-zinc-950 sm:text-5xl">
                 <span className="text-[#FF6B35]">QuoteCore+</span>
                 <br />
-                launching in June.
+                launching in July.
               </h2>
 
               <div className="mt-5 h-0.5 w-8 bg-[#FF6B35]" />
