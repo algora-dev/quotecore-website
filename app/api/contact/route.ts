@@ -100,7 +100,7 @@ export async function POST(req: NextRequest) {
         <p style="color:#444;line-height:1.6;">If you'd prefer to jump on a quick call, you can <a href="https://calendly.com/quote-core-info/15-minute-meeting" style="color:#FF6B35;">book a free 15-minute chat here</a>.</p>
         <p style="color:#444;line-height:1.6;margin-top:24px;">Talk soon,<br/><strong>The QuoteCore+ team</strong></p>
         <hr style="border:none;border-top:1px solid #eee;margin:32px 0;" />
-        <p style="font-size:12px;color:#999;margin:0;">QuoteCore+ &mdash; quoting software for contractors and trade businesses.<br/><a href="https://quote-core.com" style="color:#999;">quote-core.com</a></p>
+        <p style="font-size:12px;color:#999;margin:0;">QuoteCore+ - quoting software for contractors and trade businesses.<br/><a href="https://quote-core.com" style="color:#999;">quote-core.com</a></p>
       </div>
     `;
 

@@ -19,7 +19,7 @@ export function trackEvent(
     window.gtag("event", eventName, params ?? {});
   }
 
-  // Meta Pixel — map to standard events
+  // Meta Pixel - map to standard events
   if (window.fbq) {
     if (eventName === "signup_complete") {
       window.fbq("track", "Lead", params);
@@ -30,7 +30,7 @@ export function trackEvent(
     }
   }
 
-  // LinkedIn Insight — custom conversion
+  // LinkedIn Insight - custom conversion
   if (window.lintrk) {
     window.lintrk("track", { conversion_id: eventName });
   }

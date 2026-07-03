@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import AttributionTracker from "@/components/AttributionTracker";
 import CookieConsent from "@/components/CookieConsent";
+import QuoteCorePlusStyler from "@/components/QuoteCorePlusStyler";
 import SiteAssistant from "@/components/SiteAssistant";
 import { buildBreadcrumbSchema, buildSoftwareApplicationSchema, organizationId, siteUrl, websiteId } from "@/lib/schema";
 
@@ -87,6 +88,7 @@ export default function RootLayout({
         {children}
         <Analytics />
         <AttributionTracker />
+        <QuoteCorePlusStyler />
         <CookieConsent />
         <SiteAssistant />
         {/* Google Analytics 4 - loads gtag.js with Consent Mode default denied.

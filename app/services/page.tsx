@@ -155,10 +155,13 @@ export default function ServicesPage() {
               <p className="mt-6 max-w-xl text-base leading-7 text-zinc-600 sm:text-lg">
                 We take care of the measuring and quote build so you can focus on running your business and closing more jobs.
               </p>
+              <p className="mt-4 max-w-xl rounded-2xl border border-[#FF6B35]/15 bg-[radial-gradient(circle_at_18%_20%,rgba(255,107,53,0.10),transparent_38%),linear-gradient(135deg,rgba(255,255,255,0.74)_0%,rgba(255,247,243,0.68)_48%,rgba(255,255,255,0.74)_100%)] px-5 py-4 text-base font-semibold leading-7 text-zinc-950 shadow-[0_18px_55px_rgba(15,23,42,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-xl">
+                Let us quote a job for you using QuoteCore+. If it&apos;s not better than your current system, get a free coffee on us!
+              </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <a
                   href="/contact"
-                  className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#FF6B35] px-7 py-2.5 text-sm font-semibold text-white shadow-[0_14px_35px_rgba(255,107,53,0.22)] transition-colors hover:bg-[#e85d2b]"
+                  className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#FF6B35] px-7 py-2.5 text-sm font-semibold text-white shadow-[0_14px_35px_rgba(255,107,53,0.22)] transition-colors hover:bg-[#e85d2b] sm:w-44"
                 >
                   Get in touch
                 </a>
@@ -166,7 +169,7 @@ export default function ServicesPage() {
                   href="https://calendly.com/quote-core-info/15-minute-meeting"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="pill-shimmer inline-flex min-h-11 items-center justify-center rounded-full border border-zinc-300 bg-white px-7 py-2.5 text-sm font-medium text-zinc-900 shadow-[0_10px_25px_rgba(15,23,42,0.05)] transition-colors duration-200 hover:border-[#FF6B35]/40"
+                  className="pill-shimmer inline-flex min-h-11 items-center justify-center rounded-full border border-zinc-300 bg-white px-7 py-2.5 text-sm font-medium text-zinc-900 shadow-[0_10px_25px_rgba(15,23,42,0.05)] transition-colors duration-200 hover:border-[#FF6B35]/40 sm:w-44"
                 >
                   Book a 15-min call
                 </a>
@@ -246,7 +249,7 @@ export default function ServicesPage() {
               <div className="flex w-full flex-col gap-4 sm:flex-row lg:min-w-[430px] lg:w-auto">
                 <a
                   href="/contact"
-                  className="inline-flex min-h-[68px] w-full flex-1 items-center justify-center rounded-full bg-[#FF6B35] px-8 py-5 text-base font-semibold leading-none text-white shadow-[0_14px_35px_rgba(255,107,53,0.22)] transition-colors hover:bg-[#e85d2b] sm:min-h-14 sm:py-3"
+                  className="inline-flex min-h-11 w-full flex-1 items-center justify-center rounded-full bg-[#FF6B35] px-7 py-2.5 text-sm font-semibold leading-none text-white shadow-[0_14px_35px_rgba(255,107,53,0.22)] transition-colors hover:bg-[#e85d2b] sm:min-h-14 sm:px-8 sm:py-3 sm:text-base"
                 >
                   Get in touch
                 </a>
@@ -254,7 +257,7 @@ export default function ServicesPage() {
                   href="https://calendly.com/quote-core-info/15-minute-meeting"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="pill-shimmer inline-flex min-h-[68px] w-full flex-1 items-center justify-center rounded-full border border-zinc-300 bg-white px-8 py-5 text-sm font-medium leading-none text-zinc-900 shadow-[0_10px_25px_rgba(15,23,42,0.05)] transition-colors duration-200 hover:border-[#FF6B35]/40 sm:min-h-14 sm:py-3"
+                  className="pill-shimmer inline-flex min-h-11 w-full flex-1 items-center justify-center rounded-full border border-zinc-300 bg-white px-7 py-2.5 text-sm font-medium leading-none text-zinc-900 shadow-[0_10px_25px_rgba(15,23,42,0.05)] transition-colors duration-200 hover:border-[#FF6B35]/40 sm:min-h-14 sm:px-8 sm:py-3"
                 >
                   Book a 15-min call
                 </a>

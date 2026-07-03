@@ -137,7 +137,16 @@ export default function HomePage() {
   const steps = [
     {
       number: "01",
-      title: "How do you want to quote?",
+      title: "Create Smart Components™",
+      body: "Build your smart components, upload price catalogs or spreadsheets, drawings and images.",
+      images: [
+        { src: "/how-it-works-smart-components-list.png", label: "Smart Components" },
+        { src: "/how-it-works-smart-components-editor.png", label: "Component editor" },
+      ],
+    },
+    {
+      number: "02",
+      title: "Choose your quoting method",
       body: "Choose where to start - from your dashboard, saved resources, or a new quote.",
       options: [
         { title: "Line by line", description: "Blank Quote mode - build from scratch, full control", icon: "/how-it-works-line-by-line.png" },
@@ -151,7 +160,7 @@ export default function HomePage() {
       ],
     },
     {
-      number: "02",
+      number: "03",
       title: "Build your quote",
       body: "Add items, set pricing, customise what the customer sees, and preview the final quote.",
       images: [
@@ -161,23 +170,23 @@ export default function HomePage() {
       ],
     },
     {
-      number: "03",
-      title: "Send & track",
-      body: "Send quotes, see when customers open them, and track approvals in one place.",
+      number: "04",
+      title: "Send, track, auto follow up",
+      body: "Send quotes, orders, invoices, send auto follow ups, track acceptances and more!",
       images: [
         { src: "/how-it-works/how-it-works-3.png", label: "Message centre" },
       ],
     },
     {
-      number: "04",
-      title: "Order materials",
-      body: "Turn accepted quotes into material orders without rebuilding the job from scratch.",
+      number: "05",
+      title: "Send orders from your quote",
+      body: "Easily send orders to suppliers from a quote, add, edit, remove anything you don&apos;t need.",
       images: [
         { src: "/how-it-works/how-it-works-4.png", label: "Material orders" },
       ],
     },
     {
-      number: "05",
+      number: "06",
       title: "Invoice",
       body: "Create and manage invoices from the same connected workflow.",
       images: [
@@ -186,7 +195,7 @@ export default function HomePage() {
       ],
     },
     {
-      number: "06",
+      number: "07",
       title: "Everything tracked",
       body: "Keep quote, order, invoice, and customer activity visible in one message centre.",
       images: [
@@ -306,7 +315,7 @@ export default function HomePage() {
       name: "Tony Edwards",
       business: "NZ Audio Visual",
       quote:
-        "Its been hard as an AV company offering very diverse services to find a 1 app does it all solution, but after using QuoteCore⁺ this is as good as we've found, it does 90% of what we need it to perfectly, and the apps designed in a way that we can improvise making the app work for the other 10%, keeping everything in 1 app! This saves us so much time/money",
+        "Its been hard as an AV company offering very diverse services to find a 1 app does it all solution, but after using QuoteCore+ this is as good as we've found, it does 90% of what we need it to perfectly, and the apps designed in a way that we can improvise making the app work for the other 10%, keeping everything in 1 app! This saves us so much time/money",
       initials: "TE",
     },
     {
@@ -314,28 +323,22 @@ export default function HomePage() {
       business: "",
       quote:
         "I was part of the QuoteCore+ beta testing group and shared feedback with the team about frustrations I had with the other software I was using at the time and what would make QuoteCore+ much better. Within two weeks, the team had built the features I mentioned - and made them even better than I expected! It's rare to see a team listen and act that quickly.",
-      initials: "S",
+      initials: "SH",
     },
     {
       name: "Tom Harris",
       business: "Harris Flooring Ltd",
       quote:
-        "QuoteCore⁺ paid for itself on the second job. No more chasing customers for approvals - they can see everything clearly and sign off fast.",
+        "QuoteCore+ paid for itself by the second job. The biggest difference for us has been how much easier it is to get customer approvals. No more chasing people, resending details, or explaining the same thing over and over - customers can see everything clearly, understand what they're approving, and sign off quickly. It makes the whole quoting process feel more professional and saves us a lot of time.",
       initials: "TH",
     },
     {
       name: "Adam Westbrook",
       business: "Westbrook Fencing Co.",
       quote:
-        "I used to spend Sunday nights doing quotes. Now I send them from site before I drive home. Game changer for any solo tradesperson.",
+        "QuoteCore+ gave us our weekends back. We used to spend Sundays catching up on quotes, but now we get them finished on Friday and can actually switch off. It has made the whole quoting process quicker, easier, and a lot less stressful.",
       initials: "AW",
-    },
-    {
-      name: "Mark Clarke",
-      business: "Clarke Landscaping",
-      quote:
-        "The materials ordering side alone saved us hours a week. Everything is in one place - quote, approval, order. No more spreadsheets.",
-      initials: "MC",
+      rating: 4.5,
     },
     {
       name: "Rebecca Chen",
@@ -343,6 +346,7 @@ export default function HomePage() {
       quote:
         "Our close rate went up noticeably once we started sending proper quotes. Customers take you more seriously when everything looks professional.",
       initials: "RC",
+      rating: 4,
     },
   ];
 
@@ -375,18 +379,18 @@ export default function HomePage() {
               <div className="relative z-20 flex-1 text-center lg:flex-[1.12] lg:text-left">
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#FF6B35]">Each feature built from real experience</p>
                 <h1 className="mt-6 text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl lg:text-6xl">
-                  <span className="lg:whitespace-nowrap">The measure-up is done.</span>
-                  <br />
-                  The quote still isn&apos;t.
+                  Build your business once. Quote it forever.
                 </h1>
                 <p className="mt-4 text-xl font-semibold leading-tight text-zinc-700 sm:text-2xl lg:whitespace-nowrap">
-                  Measure. Quote. Order. Manage. Invoice. Get paid.
+                  Every quote starts with a Smart Component™
+                  <br />
+                  Built once, reused forever.
                 </p>
                 <p className="mt-4 max-w-xl text-base leading-7 text-zinc-600 sm:text-lg">
-                  The all-in-1 business platform that adapts to how you work.
+                  Every business has its own way of pricing, measuring and delivering work. QuoteCore+ captures that knowledge inside Smart Components™, allowing you to build a reusable digital system for the way your business operates.
                 </p>
                 <p className="mt-3 max-w-xl text-base leading-7 text-zinc-600 sm:text-lg">
-                  QuoteCore+ is contractor quoting software for trades that work from measurements. It helps roofers, builders and trade businesses measure jobs, build priced quotes, track customer approval, order materials, manage work, invoice and get paid - all in one connected workflow.
+                  Build your pricing, products, services and processes once, then reuse them across every quote, job and invoice - saving time, reducing mistakes and creating a faster, more consistent workflow.
                 </p>
                 <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
                   <a href="/free-trial" className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#FF6B35] px-7 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#e85d2b]" onClick={() => trackEvent("free_trial_click", { location: "hero" })}>
@@ -403,7 +407,7 @@ export default function HomePage() {
                     How it works
                   </a>
                 </div>
-                <p className="mt-3 text-sm text-zinc-500">Full Access 14 days free. No card required.</p>
+                <p className="mt-3 text-sm text-zinc-500">All features for 14 days, no card required, risk free</p>
               </div>
               {/* Right: laptop video - bg matches section so edges blend */}
               <div className="relative z-10 flex flex-1 items-end justify-center overflow-visible lg:-ml-12 lg:flex-[0.96] lg:justify-end xl:flex-[1.08]">
@@ -430,7 +434,7 @@ export default function HomePage() {
                   muted
                   playsInline
                   preload="auto"
-                  className="hero-video-float relative z-10 w-full max-w-none lg:w-[112%] lg:translate-x-4 xl:w-[120%] 2xl:w-[124%]"
+                  className="hero-video-float relative z-10 w-full max-w-none lg:w-[106%] lg:translate-x-4 xl:w-[114%] 2xl:w-[118%]"
                   style={{display: "block"}}
                 >
                   <source src="/qc-hero-laptop.mp4" type="video/mp4" />
@@ -524,14 +528,14 @@ export default function HomePage() {
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,107,53,0.12),transparent_55%)]" />
             <div className="relative">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#FF6B35]">The platform</p>
-              <h2 className="mt-3 max-w-2xl text-3xl font-semibold text-white sm:text-4xl">Why use <span className="brand-wordmark">QuoteCore<span className="brand-plus">+</span></span>?</h2>
-              <p className="mt-3 max-w-2xl text-lg font-semibold text-white">Stop managing one job with five different apps.</p>
-              <p className="mt-4 max-w-2xl text-base leading-7 text-zinc-400 sm:text-lg sm:leading-8">
-                <span className="brand-wordmark">QuoteCore<span className="brand-plus">+</span></span> brings your entire workflow into one connected platform - from your first customer conversation and quote, through to job completion, invoicing and payment - no matter your industry. Less admin. Less mistakes. More profit. More time to do what you do best.
+              <h2 className="mt-3 max-w-2xl text-3xl font-semibold text-white sm:text-4xl">Built for the way your business works.</h2>
+              <p className="mt-3 max-w-2xl text-lg font-semibold text-white">Because no two businesses work the same.</p>
+              <p className="mt-4 max-w-4xl text-base leading-7 text-zinc-400 sm:text-lg sm:leading-8">
+                Every business has its own way of pricing, measuring and delivering work. QuoteCore+ captures that knowledge using Smart Components™, creating a reusable digital workflow that&apos;s built around your business. Whether you&apos;re quoting products, services or complete projects, every future quote, job and invoice becomes faster, easier and more consistent.
               </p>
               <div className="mt-5 rounded-xl border border-white/10 bg-white/5 px-5 py-3 sm:mt-6 sm:py-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#FF6B35] mb-2">Who&apos;s it for?</p>
-                <p className="text-base leading-7 text-zinc-300"><span className="brand-wordmark">QuoteCore<span className="brand-plus">+</span></span> is built for any business that needs to go from quote to getting paid and everything in between - all in one connected platform. We&apos;ve taken what is traditionally a chaotic journey spread across multiple apps, spreadsheets, emails, and documents, and transformed it into a simple, professional, and highly flexible workflow designed around the way your business operates.</p>
+                <p className="text-base leading-7 text-zinc-300">QuoteCore+ is built for any business that needs to quote, manage work and get paid. From roofers and builders to electricians, landscapers, manufacturers and service businesses, Smart Components™ adapt to the way you already work - giving you one connected workflow from your first quote to your final invoice.</p>
               </div>
             </div>
             <div className="relative mt-5 flex flex-wrap gap-4 sm:mt-8">
@@ -554,33 +558,35 @@ export default function HomePage() {
               {/* Left: text content */}
               <div className="flex-1">
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500"><span className="brand-wordmark">QuoteCore<span className="brand-plus">+</span></span> remembers how you work.</p>
-                <h2 className="mt-3 text-3xl font-semibold sm:text-4xl text-[#FF6B35]">Smart Components™</h2>
-                <p className="mt-4 text-base font-medium leading-7 text-zinc-700 sm:text-lg">Other software remembers what you charged. <span className="brand-wordmark">QuoteCore<span className="brand-plus">+</span></span> remembers how you work.</p>
+                <h2 className="mt-3 text-3xl font-semibold sm:text-4xl text-[#FF6B35]">Introducing Smart Components™</h2>
+                <p className="mt-4 text-base font-medium leading-7 text-zinc-700 sm:text-lg">Smart Components aren&apos;t templates.</p>
                 <p className="mt-4 text-base leading-7 text-zinc-600 sm:text-lg sm:leading-8">
-                  Most software stores your quotes. <span className="brand-wordmark">QuoteCore<span className="brand-plus">+</span></span> stores your knowledge.
+                  They aren&apos;t products. They aren&apos;t quote libraries.
                 </p>
                 <p className="mt-4 text-base leading-7 text-zinc-600 sm:text-lg sm:leading-8">
-                  Every quote you create should make the next quote faster. With Smart Components&trade;, you can save the parts of a job you use again and again - including materials, labour, waste allowances, measurements, drawings, images, calculations and pricing rules.
+                  They&apos;re reusable building blocks that capture the way your business works. Most software remembers what you charged. QuoteCore+ remembers how you work. Think of Smart Components™ as a reusable digital version of the way your business works.
                 </p>
-                <p className="mt-4 text-base font-medium leading-7 text-zinc-700 sm:text-lg">Create them once. Reuse them in seconds.</p>
-                <ul className="mt-8 grid gap-1.5 sm:grid-cols-2 sm:gap-3">
+                <p className="mt-4 text-base leading-7 text-zinc-600 sm:text-lg sm:leading-8">
+                  Every business has its own pricing, products, services, measurements and processes. Smart Components capture that knowledge so you only build it once, then reuse it across every future quote, job and invoice.
+                </p>
+                <ul className="mt-6 grid gap-3 sm:grid-cols-2">
                   {[
-                    "Materials",
+                    "Pricing",
+                    "Products & Services",
                     "Labour",
-                    "Waste allowances",
                     "Measurements",
-                    "Drawings",
-                    "Images",
-                    "Angle, pitch, volume, area and length calculations",
-                    "Pricing rules",
+                    "Calculations",
+                    "Drawings & Images",
+                    "Waste & Allowances",
+                    "Custom Rules",
                   ].map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-zinc-700">
-                      <span className="mt-1 shrink-0 text-[#FF6B35] font-bold">✓</span>
+                    <li key={item} className="flex items-center gap-3 leading-6 text-zinc-700">
+                      <span className="shrink-0 text-[#FF6B35] font-bold leading-none">✓</span>
                       {item}
                     </li>
                   ))}
                 </ul>
-                <p className="mt-8 text-base font-semibold leading-7 text-zinc-950 sm:text-lg">Make them once. Reuse them in seconds. Forever.</p>
+                <p className="mt-8 text-base font-semibold leading-7 text-zinc-950 sm:text-lg">Build it once. Quote it forever.</p>
                 <div className="mt-8 flex flex-wrap gap-4">
                   <a href="/free-trial" className="inline-flex items-center justify-center rounded-full bg-[#FF6B35] px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#e85d2b]">Start free trial</a>
                   <a href="https://calendly.com/quote-core-info/15-minute-meeting" target="_blank" rel="noopener noreferrer" className="pill-shimmer inline-flex items-center justify-center rounded-full border border-zinc-300 bg-white px-7 py-3 text-sm font-medium text-zinc-900 transition-colors duration-200 hover:border-[#FF6B35]/40">Book a call</a>
@@ -619,7 +625,7 @@ export default function HomePage() {
 
         <section id="how-it-works" className="mx-auto w-full max-w-7xl px-6 py-14 lg:px-8 lg:py-24">
           <div className="text-center mb-12">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">How it works</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">SEE HOW QUOTECORE+ WORKS</p>
             <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
               Each step is faster, easier, and all in one place!
             </h2>
@@ -708,7 +714,7 @@ export default function HomePage() {
                 Watch <span className="brand-wordmark">QuoteCore<span className="brand-plus">+</span></span> in action
               </h2>
               <p className="mt-4 text-base leading-7 text-zinc-600 sm:text-lg">
-                Quick step-by-step tutorials to help you set up components, build quotes, and create material orders with confidence.
+                Easy step-by-step tutorials to help you create components, build quotes, send orders, and invoice with confidence.
               </p>
             </div>
 
@@ -851,15 +857,32 @@ export default function HomePage() {
             <div className="relative overflow-hidden rounded-[2rem] border border-[#FF6B35]/20 bg-[radial-gradient(circle_at_18%_20%,rgba(255,107,53,0.10),transparent_34%),linear-gradient(135deg,#fff_0%,#fff7f3_48%,#fff_100%)] p-6 shadow-[0_24px_80px_rgba(15,23,42,0.08)] sm:p-8 lg:p-10">
               <div className="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr]">
                 <div className="relative z-10">
-                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#FF6B35]">Services</p>
+                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#FF6B35]">Estimating Services</p>
                   <h2 className="mt-4 max-w-xl text-3xl font-semibold leading-tight text-zinc-950 sm:text-4xl">
-                    Send us the plans,
-                    <span className="block text-[#FF6B35]">We&apos;ll measure and build the quote.</span>
+                    You build the business.
+                    <span className="block text-[#FF6B35]">We&apos;ll build the quote.</span>
                   </h2>
                   <div className="mt-4 h-0.5 w-16 rounded-full bg-[#FF6B35]" />
                   <p className="mt-6 max-w-xl text-base leading-7 text-zinc-600 sm:text-lg">
-                    Short on time? Our team can handle the takeoff for you. We&apos;ll measure from your plans, build the quote using your pricing, and deliver it back-fast and accurate.
+                    Whether you need measurements only, a complete quote, or someone to handle the entire process, our team becomes your estimating department.
                   </p>
+                  <div className="mt-5 max-w-xl lg:max-w-2xl">
+                    <p className="text-base font-semibold text-zinc-950">Service options</p>
+                    <p className="mt-1 text-base leading-7 text-zinc-600">Choose the level of help you need:</p>
+                    <ul className="mt-3 grid gap-2 text-base text-zinc-700 sm:grid-cols-[max-content_max-content] sm:gap-x-10 lg:gap-x-12">
+                      {[
+                        "Measurements & quantities only",
+                        "Measurements + pricing",
+                        "Complete quote ready to send",
+                        "Ongoing estimating support",
+                      ].map((item) => (
+                        <li key={item} className="flex items-center gap-3 whitespace-nowrap leading-6">
+                          <span className="shrink-0 font-bold leading-none text-[#FF6B35]">✓</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                   <a
                     href="/services"
                     className="mt-8 inline-flex min-h-11 items-center justify-center gap-3 rounded-full bg-[#FF6B35] px-7 py-2.5 text-sm font-semibold text-white shadow-[0_14px_32px_rgba(255,107,53,0.24)] transition-colors hover:bg-[#e85d2b]"
@@ -871,9 +894,17 @@ export default function HomePage() {
                       <path d="M13 6l6 6-6 6" />
                     </svg>
                   </a>
+                  <p className="mt-5 max-w-xl text-base leading-7 text-zinc-600">
+                    As your business grows, we&apos;ll help you transition into QuoteCore+, giving you full access to the same workflow we&apos;ve been building for you.
+                  </p>
                 </div>
 
-                <ServicesPlanGraphic />
+                <div className="relative z-10 flex flex-col items-center">
+                  <ServicesPlanGraphic />
+                  <p className="relative mt-10 w-[92%] max-w-[560px] rounded-2xl border border-[#FF6B35]/15 bg-[radial-gradient(circle_at_18%_20%,rgba(255,107,53,0.10),transparent_38%),linear-gradient(135deg,rgba(255,255,255,0.74)_0%,rgba(255,247,243,0.68)_48%,rgba(255,255,255,0.74)_100%)] px-5 py-4 text-base font-semibold leading-7 text-zinc-950 shadow-[0_18px_55px_rgba(15,23,42,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-xl">
+                    Let us quote a job for you using QuoteCore+. If it&apos;s not better than your current system, get a free coffee on us!
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -925,12 +956,15 @@ export default function HomePage() {
                     </div>
                   </div>
                   <p className="text-xl font-semibold text-zinc-950">Meet Shaun</p>
-                  <div className="mt-4 space-y-4 text-base leading-7 text-zinc-600 sm:text-lg sm:leading-8">
-                    <p>Shaun brings over two decades of experience founding and operating businesses across construction and technology sectors.</p>
-                    <p>Throughout that journey, he encountered the same problem repeatedly: no matter the industry, businesses were forced to juggle multiple apps, spreadsheets, emails, and documents just to take a job from quote to payment.</p>
-                    <p>There wasn&apos;t a single platform that was flexible enough to adapt to how individual businesses actually work.</p>
-                    <p><span className="brand-wordmark">QuoteCore<span className="brand-plus">+</span></span> was created under Shaun&apos;s direction to solve that problem. The goal was simple: build a powerful yet flexible platform that works around your existing processes - making them faster, more organised, less chaotic, and ultimately more profitable.</p>
-                    <p className="font-medium text-zinc-800">&ldquo;We built <span className="brand-wordmark">QuoteCore<span className="brand-plus">+</span></span> around the workflow I wish I had years ago - practical, simple, and designed to adapt to the way every business works.&rdquo;</p>
+                  <div className="mt-4 space-y-4 text-base leading-7 text-zinc-600">
+                    <p>QuoteCore+ wasn&apos;t created because I wanted to build software. It was created because I got tired of using it.</p>
+                    <p>After more than two decades building and running businesses across construction and technology, I kept running into the same problem. Every business had its own way of working, yet every software platform expected them to work exactly the same way.</p>
+                    <p>Jobs were spread across multiple apps, spreadsheets, emails and documents. The same information was entered over and over again, wasting time, creating mistakes, and making something as simple as getting from quote to payment far more complicated than it needed to be.</p>
+                    <p>I didn&apos;t start QuoteCore+ to change the way businesses work. I started it to build software that finally works the way businesses already do.</p>
+                    <p>That idea became the foundation of QuoteCore+. Instead of forcing businesses into rigid workflows, we built a platform that adapts to the way each business already operates. Smart Components™ capture your products, services, pricing, measurements and processes, creating a reusable digital system that makes every future quote, job and invoice faster, easier and more consistent.</p>
+                    <p>Today, every feature we build is guided by one simple question: Does this make running a business simpler? If the answer is no, we don&apos;t build it.</p>
+                    <p className="font-medium text-zinc-800">&ldquo;We built QuoteCore+ to be the software I always wished existed - simple, flexible, and built around the way businesses actually work.&rdquo;</p>
+                    <p className="font-medium text-zinc-800">- Shaun Carter, Founder</p>
                   </div>
                 </div>
                 <div className="relative hidden overflow-hidden rounded-r-[2rem] lg:block" style={{minHeight: "400px"}}>
@@ -949,32 +983,46 @@ export default function HomePage() {
         <section className="bg-[#FF6B35]/10 pt-14 pb-8">
           <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
             <div className="rounded-[2rem] bg-zinc-950 p-2 shadow-[0_22px_55px_rgba(255,107,53,0.22)]">
-              <div className="relative overflow-hidden rounded-[1.6rem] border border-[#FF6B35]/35 bg-[radial-gradient(circle_at_15%_0%,rgba(255,255,255,0.12),transparent_30%),linear-gradient(135deg,#242424_0%,#111318_58%,#090a0d_100%)] px-8 py-10 sm:px-12 lg:flex lg:items-center lg:justify-between lg:gap-12 lg:px-14 lg:py-12">
-                <div className="relative max-w-3xl">
-                  <p className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.04em] text-[#FF6B35]">
-                    <svg viewBox="0 0 16 16" className="h-3 w-3" fill="currentColor" aria-hidden="true">
-                      <path d="M5 3.5 11 8l-6 4.5v-9Z" />
-                    </svg>
-                    Custom requests
-                  </p>
-                  <h2 className="mt-6 text-4xl font-semibold leading-tight text-white sm:text-5xl">
-                    Have a feature in mind?
-                  </h2>
-                  <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-300 sm:text-lg sm:leading-8">
-                    If there&apos;s a workflow improvement that would make your day easier, let us know. We might build it into <span className="brand-wordmark">QuoteCore<span className="brand-plus">+</span></span>.
-                  </p>
-                </div>
+              <div className="relative overflow-hidden rounded-[1.6rem] border border-[#FF6B35]/35 bg-[radial-gradient(circle_at_15%_0%,rgba(255,255,255,0.12),transparent_30%),linear-gradient(135deg,#242424_0%,#111318_58%,#090a0d_100%)] px-8 py-12 sm:px-12 sm:py-14 lg:px-14 lg:py-16">
+                <div className="relative grid gap-12 lg:grid-cols-2 lg:gap-16 lg:before:absolute lg:before:left-1/2 lg:before:top-0 lg:before:h-full lg:before:w-px lg:before:-translate-x-1/2 lg:before:bg-white/10">
+                  <div className="flex flex-col">
+                    <h2 className="text-3xl font-semibold leading-tight text-white sm:text-4xl">
+                      Help shape the future of QuoteCore+
+                    </h2>
+                    <p className="mt-5 text-base leading-7 text-zinc-300 sm:text-lg sm:leading-8">
+                      QuoteCore+ is built alongside the businesses that use it. If there&apos;s a feature, workflow or improvement that would genuinely make your day easier, tell us. Every suggestion is reviewed by our team, and if it helps businesses like yours, there&apos;s a good chance it&apos;ll become part of QuoteCore+.
+                    </p>
+                    <a
+                      href="/contact"
+                      className="mt-auto inline-flex min-h-12 w-fit translate-y-4 items-center justify-center gap-3 rounded-full border border-white/20 bg-[#FF6B35] px-8 py-2.5 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(255,107,53,0.35)] transition-colors hover:bg-[#ff5a1f] sm:text-base"
+                    >
+                      Share your idea
+                      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M5 12h14" />
+                        <path d="M13 6l6 6-6 6" />
+                      </svg>
+                    </a>
+                  </div>
 
-                <a
-                  href="/contact"
-                  className="relative mt-8 inline-flex min-h-16 items-center justify-center gap-3 rounded-full border border-white/20 bg-[#FF6B35] px-10 text-base font-semibold text-white shadow-[0_18px_40px_rgba(255,107,53,0.35)] transition-colors hover:bg-[#ff5a1f] sm:text-lg lg:mt-0 lg:min-w-64"
-                >
-                  Get in touch
-                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M5 12h14" />
-                    <path d="M13 6l6 6-6 6" />
-                  </svg>
-                </a>
+                  <div className="flex flex-col border-t border-white/10 pt-10 lg:border-t-0 lg:pt-0">
+                    <h2 className="text-3xl font-semibold leading-tight text-white sm:text-4xl">
+                      Think your current software does something better?
+                    </h2>
+                    <p className="mt-5 text-base leading-7 text-zinc-300 sm:text-lg sm:leading-8">
+                      Tell us why. We built QuoteCore+ to adapt to the way businesses actually work, and we&apos;re always looking for ways to improve. If your idea makes QuoteCore+ better for everyone, we&apos;ll seriously consider building it.
+                    </p>
+                    <a
+                      href="/contact"
+                      className="mt-auto inline-flex min-h-12 w-fit translate-y-4 items-center justify-center gap-3 rounded-full border border-white/20 bg-white px-8 py-2.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-zinc-100 sm:text-base"
+                    >
+                      Challenge Us
+                      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M5 12h14" />
+                        <path d="M13 6l6 6-6 6" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1007,13 +1055,7 @@ export default function HomePage() {
                   {testimonials.map((t, idx) => (
                     <div key={idx} className="w-full min-w-full shrink-0 px-3">
                       <div className="flex h-full flex-col rounded-[2rem] bg-white p-8 shadow-sm">
-                        <div className="flex gap-1 mb-5">
-                          {[...Array(5)].map((_, i) => (
-                            <svg key={i} className="h-4 w-4 text-[#FF6B35]" viewBox="0 0 20 20" fill="currentColor">
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                          ))}
-                        </div>
+                        <TestimonialStars rating={t.rating ?? 5} />
                         <p className="flex-1 text-base leading-relaxed text-zinc-600">{carouselMounted ? <>&ldquo;{t.quote}&rdquo;</> : null}</p>
                         <div className="mt-8 flex items-center gap-3">
                           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FF6B35] text-xs font-semibold text-white">{carouselMounted ? t.initials : null}</div>
@@ -1051,13 +1093,7 @@ export default function HomePage() {
                   // eslint-disable-next-line jsx-a11y/no-redundant-roles
                     <div key={idx} className="w-1/3 shrink-0 px-3" aria-hidden="true">
                       <div className="flex h-full flex-col rounded-[2rem] bg-white p-8 shadow-sm">
-                        <div className="flex gap-1 mb-5">
-                          {[...Array(5)].map((_, i) => (
-                            <svg key={i} className="h-4 w-4 text-[#FF6B35]" viewBox="0 0 20 20" fill="currentColor">
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                          ))}
-                        </div>
+                        <TestimonialStars rating={t.rating ?? 5} />
                         <p className="flex-1 text-base leading-relaxed text-zinc-600">{carouselMounted ? <>&ldquo;{t.quote}&rdquo;</> : null}</p>
                         <div className="mt-8 flex items-center gap-3">
                           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FF6B35] text-xs font-semibold text-white">{carouselMounted ? t.initials : null}</div>
@@ -1211,7 +1247,7 @@ export default function HomePage() {
                 </p>
                 <div className="mx-auto my-6 h-0.5 w-12 bg-[#FF6B35]" aria-hidden="true" />
                 <p className="text-3xl font-semibold leading-tight text-[#FF6B35] sm:text-4xl">
-                  We say: &lsquo;Here&rsquo;s a flexible system - make it work for your business.&rsquo;
+                  We say: &lsquo;Smart Components™ provide a flexible system - make it work for your business.&rsquo;
                 </p>
               </blockquote>
             </div>
@@ -1302,8 +1338,20 @@ export default function HomePage() {
           transform: scale(1.03) translateY(-8px);
         }
         .hero-floating-card {
-          animation: heroCardFloat 6.5s ease-in-out var(--hero-card-delay, 0s) infinite;
+          animation: heroCardFloat 6.5s ease-in-out var(--hero-card-float-delay, 0s) infinite;
           will-change: transform;
+        }
+        .hero-floating-card-reveal {
+          opacity: 0;
+          transform: translate3d(0, 12px, 0) scale(0.96);
+          animation: heroCardReveal 0.55s ease-out var(--hero-card-reveal-delay, 3s) forwards;
+          will-change: opacity, transform;
+        }
+        @keyframes heroCardReveal {
+          to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+          }
         }
         @keyframes heroCardFloat {
           0%, 100% {
@@ -1314,8 +1362,11 @@ export default function HomePage() {
           }
         }
         @media (prefers-reduced-motion: reduce) {
+          .hero-floating-card-reveal,
           .hero-floating-card {
             animation: none;
+            opacity: 1;
+            transform: none;
           }
         }
         .brand-wordmark {
@@ -1423,6 +1474,7 @@ function HeroFloatingCard({
   description: string;
   className: string;
 }) {
+  const revealDelay = icon === "measure" ? "3s" : icon === "order" ? "3.45s" : "3.9s";
   const floatDelay = icon === "quote" ? "1.2s" : icon === "order" ? "2.2s" : "0s";
 
   return (
@@ -1431,17 +1483,22 @@ function HeroFloatingCard({
       aria-hidden="true"
     >
       <div
-        className="hero-floating-card rounded-xl border border-zinc-200/80 bg-white/95 p-3 shadow-[0_14px_42px_rgba(15,23,42,0.12)] backdrop-blur-md"
-        style={{"--hero-card-delay": floatDelay} as React.CSSProperties}
+        className="hero-floating-card-reveal"
+        style={{"--hero-card-reveal-delay": revealDelay} as React.CSSProperties}
       >
-        <div className="flex items-start gap-2.5">
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#FF6B35]/10 text-[#FF6B35]">
-            <HeroFloatingIcon type={icon} />
-          </span>
-          <span className="min-w-0">
-            <span className="block text-sm font-semibold leading-5 text-zinc-950">{title}</span>
-            <span className="mt-0.5 block text-xs leading-4 text-zinc-600">{description}</span>
-          </span>
+        <div
+          className="hero-floating-card rounded-xl border border-zinc-200/80 bg-white/95 p-3 shadow-[0_14px_42px_rgba(15,23,42,0.12)] backdrop-blur-md"
+          style={{"--hero-card-float-delay": floatDelay} as React.CSSProperties}
+        >
+          <div className="flex items-start gap-2.5">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#FF6B35]/10 text-[#FF6B35]">
+              <HeroFloatingIcon type={icon} />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-sm font-semibold leading-5 text-zinc-950">{title}</span>
+              <span className="mt-0.5 block text-xs leading-4 text-zinc-600">{description}</span>
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -1478,6 +1535,29 @@ function HeroFloatingIcon({type}: {type: "measure" | "quote" | "order"}) {
       <path d="M18 20h.01" />
       <path d="M12 8h4" />
     </svg>
+  );
+}
+
+function TestimonialStars({rating}: {rating: number}) {
+  return (
+    <div className="mb-5 flex gap-1" aria-label={`${rating} out of 5 stars`}>
+      {[0, 1, 2, 3, 4].map((index) => {
+        const fillPercent = Math.max(0, Math.min(1, rating - index)) * 100;
+
+        return (
+          <span key={index} className="relative h-4 w-4 text-zinc-200" aria-hidden="true">
+            <svg className="absolute inset-0 h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            </svg>
+            <span className="absolute inset-0 overflow-hidden text-[#FF6B35]" style={{width: `${fillPercent}%`}}>
+              <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            </span>
+          </span>
+        );
+      })}
+    </div>
   );
 }
 

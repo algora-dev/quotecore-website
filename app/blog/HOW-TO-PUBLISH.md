@@ -1,6 +1,6 @@
 # How to publish a blog post
 
-## Step 1 — Create the MDX file
+## Step 1 - Create the MDX file
 
 Create a new file at:
 `app/blog/[slug]/content/<your-slug>.mdx`
@@ -17,7 +17,7 @@ QuoteCore+ helps roofers quote faster by...
 3. Send the quote
 ```
 
-## Step 2 — Register the post
+## Step 2 - Register the post
 
 Open `app/blog/[slug]/page.tsx` and add an entry to the `posts` object:
 
@@ -32,7 +32,7 @@ Open `app/blog/[slug]/page.tsx` and add an entry to the `posts` object:
 
 Also add the same entry to the posts array in `app/blog/page.tsx` so it appears on the index.
 
-## Step 3 — Update the sitemap
+## Step 3 - Update the sitemap
 
 Add the post URL to `app/sitemap.ts`:
 
@@ -45,6 +45,6 @@ Add the post URL to `app/sitemap.ts`:
 },
 ```
 
-## Step 4 — Deploy
+## Step 4 - Deploy
 
 Tell Barry to deploy to Vercel. Done.
