@@ -25,6 +25,7 @@ export default function HomePage() {
   const [activeTutorial, setActiveTutorial] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [carouselMounted, setCarouselMounted] = useState(false);
+  const [pricingOpen, setPricingOpen] = useState(false);
   const bannerTrackRef = useRef<HTMLDivElement | null>(null);
   const bannerPosRef = useRef(0);
 
@@ -317,21 +318,21 @@ export default function HomePage() {
       name: "Tony Edwards",
       business: "NZ Audio Visual",
       quote:
-        "As an AV company offering a wide range of services and products, finding one app that can handle everything has always been difficult. QuoteCore+ has made it easy to streamline our quoting with smart components and catalogue uploads covering almost everything we provide. It does 90% of what we need perfectly, and the flexibility of the app lets us make the other 10% work too - all in one place. It saves us serious time, admin, and money.",
+        "As an AV company offering a wide range of services and products, finding one app that can handle everything has always been difficult. QuoteCore+ has made it easy to streamline our quoting with smart components and catalogue uploads covering everything we provide. It does 90% of what we need perfectly, and the flexibility of the app lets us make the other 10% work too - all in one place. It saves us serious time, admin, and money.",
       initials: "TE",
     },
     {
       name: "Saskia",
       business: "",
       quote:
-        "I was part of the QuoteCore+ beta testing group and shared feedback with the team about frustrations I had with the other software I was using at the time and what would make QuoteCore+ much better. Within two weeks, the team had built the features I mentioned - and made them even better than I expected! It's rare to see a team listen and act that quickly.",
+        "I'm still part of the QuoteCore+ beta testing group and shared a lot of feedback with the team about frustrations I had with the other software I was using at the time and, what would make QuoteCore+ much better. Within two weeks, the team had built the features I mentioned - and made them even better than I expected! It's rare to see a team listen and act that quickly.",
       initials: "SH",
     },
     {
       name: "Tom Harris",
       business: "Harris Flooring Ltd",
       quote:
-        "QuoteCore+ paid for itself by the first job. The biggest difference for us has been how much easier it is to get customer approvals. No more chasing people, resending details, or explaining the same thing over and over - customers can see everything clearly, understand what they're approving, and sign off quickly. It makes the whole quoting process feel more professional and saves us a lot of time.",
+        "QuoteCore+ paid for itself from the first quote. The biggest difference for us has been how much faster we go from measuring, quoting to getting the customer approval. No more chasing people, auto follow ups make that so easy for us while we're on the tools! It makes the whole quoting process feel more professional and saves us a lot of time. I'm probably going to use the order and invoice feature next!",
       initials: "TH",
     },
     {
@@ -1106,9 +1107,15 @@ export default function HomePage() {
         </section>
 
         {/* PRICING SECTION */}
-        <section id="pricing" className="bg-zinc-950 py-24 text-white">
+        <section id="pricing" className={`bg-zinc-950 text-white transition-all duration-300 ${pricingOpen ? "py-24" : "py-10"}`}>
           <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <button
+              type="button"
+              onClick={() => setPricingOpen((open) => !open)}
+              className="group flex w-full flex-col gap-5 text-left sm:flex-row sm:items-center sm:justify-between"
+              aria-expanded={pricingOpen}
+              aria-controls="pricing-details"
+            >
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#FF8A61]">Pricing</p>
                 <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
@@ -1118,88 +1125,106 @@ export default function HomePage() {
                   Start with a full 14-day free trial. No card required. Founding customer pricing now available.
                 </p>
               </div>
-
-            </div>
-
-            <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {pricingPlans.map((plan) => (
-                <div
-                  key={plan.name}
-                  className={`relative flex flex-col rounded-[2rem] border p-8 ${
-                    plan.featured
-                      ? "border-[#FF6B35] bg-white text-zinc-950"
-                      : "border-white/10 bg-white/5"
-                  } ${plan.comingSoon ? "opacity-60" : ""}`}
+              <span className="inline-flex h-12 w-fit items-center justify-center gap-3 rounded-full border border-white/15 bg-white/10 px-6 text-sm font-semibold text-white transition-colors group-hover:bg-white/15">
+                {pricingOpen ? "Hide pricing" : "View pricing"}
+                <svg
+                  viewBox="0 0 24 24"
+                  className={`h-4 w-4 transition-transform duration-300 ${pricingOpen ? "rotate-180" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.25"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
                 >
-                  <h3 className="text-xl font-semibold">{plan.name}</h3>
-                  <div className="mt-4 space-y-1">
-                    <p className="text-4xl font-semibold">
-                      {currency === "GBP" ? plan.gbp : plan.usd}
-                      {!plan.isFree && !plan.comingSoon && (
-                        <span className={`ml-1 align-baseline text-sm font-medium ${
-                          plan.featured ? "text-zinc-400" : "text-zinc-500"
-                        }`}>/mo</span>
-                      )}
-                    </p>
-                    {!plan.isFree && !plan.comingSoon && plan.originalUsd && (
-                      <p className={`text-sm ${plan.featured ? "text-zinc-500" : "text-zinc-400"}`}>
-                        Regular price <s>{currency === "GBP" ? plan.originalGbp : plan.originalUsd}/mo</s>
-                      </p>
-                    )}
-                  </div>
-                  <p className={`mt-3 text-sm ${
-                    plan.featured ? "text-zinc-500" : "text-zinc-400"
-                  }`}>{plan.subtitle}</p>
-                  <ul className="mt-6 flex-1 space-y-2">
-                    {plan.features.map((f) => (
-                      <li key={f} className="flex items-center gap-2 text-sm">
-                        <svg className="h-4 w-4 shrink-0 text-[#FF6B35]" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                        <span className={plan.featured ? "text-zinc-700" : "text-zinc-300"}>{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  {plan.comingSoon ? (
-                    <span className="mt-8 inline-flex min-h-11 items-center justify-center rounded-full border border-zinc-600 text-sm text-zinc-500">
-                      Coming soon
-                    </span>
-                  ) : (
-                    <a
-                      href="/free-trial"
-                      className={`mt-8 inline-flex min-h-11 items-center justify-center rounded-full text-sm font-semibold transition-colors ${
-                        plan.featured
-                          ? "bg-[#FF6B35] text-white hover:bg-[#e85d2b]"
-                          : "border border-white/20 text-white hover:bg-white/10"
-                      }`}
-                      onClick={() => trackEvent("free_trial_click", { location: "pricing" })}
-                    >
-                      Start free trial
-                    </a>
-                  )}
-                </div>
-              ))}
-            </div>
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </span>
+            </button>
 
-            <p className="mt-8 text-center text-sm text-zinc-500">
-              VAT calculated at checkout where applicable.
-            </p>
-            <p className="mt-3 text-center text-sm text-zinc-400">
-              USD and GBP pricing available. UK visitors are shown GBP automatically.
-            </p>
-            <p className="mt-3 text-center text-sm text-zinc-400">
-              Not sure which plan fits?{" "}
-              <a
-                href="https://calendly.com/quote-core-info/15-minute-meeting"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline underline-offset-2 hover:text-white"
-                onClick={() => trackEvent("book_call_click", { location: "pricing" })}
-              >
-                Book 15 minutes with Shaun
-              </a>{" "}
-              and we&apos;ll help you find the right setup.
-            </p>
+            {pricingOpen && (
+              <div id="pricing-details">
+                <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {pricingPlans.map((plan) => (
+                    <div
+                      key={plan.name}
+                      className={`relative flex flex-col rounded-[2rem] border p-8 ${
+                        plan.featured
+                          ? "border-[#FF6B35] bg-white text-zinc-950"
+                          : "border-white/10 bg-white/5"
+                      } ${plan.comingSoon ? "opacity-60" : ""}`}
+                    >
+                      <h3 className="text-xl font-semibold">{plan.name}</h3>
+                      <div className="mt-4 space-y-1">
+                        <p className="text-4xl font-semibold">
+                          {currency === "GBP" ? plan.gbp : plan.usd}
+                          {!plan.isFree && !plan.comingSoon && (
+                            <span className={`ml-1 align-baseline text-sm font-medium ${
+                              plan.featured ? "text-zinc-400" : "text-zinc-500"
+                            }`}>/mo</span>
+                          )}
+                        </p>
+                        {!plan.isFree && !plan.comingSoon && plan.originalUsd && (
+                          <p className={`text-sm ${plan.featured ? "text-zinc-500" : "text-zinc-400"}`}>
+                            Regular price <s>{currency === "GBP" ? plan.originalGbp : plan.originalUsd}/mo</s>
+                          </p>
+                        )}
+                      </div>
+                      <p className={`mt-3 text-sm ${
+                        plan.featured ? "text-zinc-500" : "text-zinc-400"
+                      }`}>{plan.subtitle}</p>
+                      <ul className="mt-6 flex-1 space-y-2">
+                        {plan.features.map((f) => (
+                          <li key={f} className="flex items-center gap-2 text-sm">
+                            <svg className="h-4 w-4 shrink-0 text-[#FF6B35]" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                            <span className={plan.featured ? "text-zinc-700" : "text-zinc-300"}>{f}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      {plan.comingSoon ? (
+                        <span className="mt-8 inline-flex min-h-11 items-center justify-center rounded-full border border-zinc-600 text-sm text-zinc-500">
+                          Coming soon
+                        </span>
+                      ) : (
+                        <a
+                          href="/free-trial"
+                          className={`mt-8 inline-flex min-h-11 items-center justify-center rounded-full text-sm font-semibold transition-colors ${
+                            plan.featured
+                              ? "bg-[#FF6B35] text-white hover:bg-[#e85d2b]"
+                              : "border border-white/20 text-white hover:bg-white/10"
+                          }`}
+                          onClick={() => trackEvent("free_trial_click", { location: "pricing" })}
+                        >
+                          Start free trial
+                        </a>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <p className="mt-8 text-center text-sm text-zinc-500">
+                  VAT calculated at checkout where applicable.
+                </p>
+                <p className="mt-3 text-center text-sm text-zinc-400">
+                  USD and GBP pricing available. UK visitors are shown GBP automatically.
+                </p>
+                <p className="mt-3 text-center text-sm text-zinc-400">
+                  Not sure which plan fits?{" "}
+                  <a
+                    href="https://calendly.com/quote-core-info/15-minute-meeting"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-2 hover:text-white"
+                    onClick={() => trackEvent("book_call_click", { location: "pricing" })}
+                  >
+                    Book 15 minutes with Shaun
+                  </a>{" "}
+                  and we&apos;ll help you find the right setup.
+                </p>
+              </div>
+            )}
           </div>
         </section>
 
