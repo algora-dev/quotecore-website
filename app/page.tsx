@@ -317,7 +317,7 @@ export default function HomePage() {
       name: "Tony Edwards",
       business: "NZ Audio Visual",
       quote:
-        "Its been hard as an AV company offering very diverse services to find a 1 app does it all solution, but after using QuoteCore+ this is as good as we've found, it does 90% of what we need it to perfectly, and the apps designed in a way that we can improvise making the app work for the other 10%, keeping everything in 1 app! This saves us so much time/money",
+        "As an AV company offering a wide range of services and products, finding one app that can handle everything has always been difficult. QuoteCore+ has made it easy to streamline our quoting with smart components and catalogue uploads covering almost everything we provide. It does 90% of what we need perfectly, and the flexibility of the app lets us make the other 10% work too - all in one place. It saves us serious time, admin, and money.",
       initials: "TE",
     },
     {
@@ -331,7 +331,7 @@ export default function HomePage() {
       name: "Tom Harris",
       business: "Harris Flooring Ltd",
       quote:
-        "QuoteCore+ paid for itself by the second job. The biggest difference for us has been how much easier it is to get customer approvals. No more chasing people, resending details, or explaining the same thing over and over - customers can see everything clearly, understand what they're approving, and sign off quickly. It makes the whole quoting process feel more professional and saves us a lot of time.",
+        "QuoteCore+ paid for itself by the first job. The biggest difference for us has been how much easier it is to get customer approvals. No more chasing people, resending details, or explaining the same thing over and over - customers can see everything clearly, understand what they're approving, and sign off quickly. It makes the whole quoting process feel more professional and saves us a lot of time.",
       initials: "TH",
     },
     {
