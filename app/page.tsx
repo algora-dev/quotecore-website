@@ -436,7 +436,7 @@ export default function HomePage() {
                   muted
                   playsInline
                   preload="auto"
-                  className="hero-video-float relative z-10 w-full max-w-none lg:w-[106%] lg:translate-x-4 xl:w-[114%] 2xl:w-[118%]"
+                  className="hero-video-float relative z-10 w-full max-w-none lg:w-[96%] lg:translate-x-4 xl:w-[104%] 2xl:w-[108%]"
                   style={{display: "block"}}
                 >
                   <source src="/qc-hero-laptop.mp4" type="video/mp4" />
