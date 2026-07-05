@@ -13,13 +13,16 @@ const navItems = [
   { label: "Free trial", href: "/free-trial" },
 ];
 
-export default function BlogHeader(_props: { backLabel?: string; backHref?: string }) {
+export default function BlogHeader({ backLabel, backHref = "/" }: { backLabel?: string; backHref?: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const headerButton =
     "inline-flex h-11 min-w-[138px] items-center justify-center rounded-full px-5 text-sm transition-colors duration-200";
 
   const contactButton =
+    `${headerButton} pill-shimmer border border-zinc-300 bg-white font-medium text-zinc-900 shadow-[0_6px_24px_rgba(255,255,255,0.18)_inset,0_10px_30px_rgba(0,0,0,0.04)] backdrop-blur-3xl hover:border-[#FF6B35]/40`;
+
+  const backButton =
     `${headerButton} pill-shimmer border border-zinc-300 bg-white font-medium text-zinc-900 shadow-[0_6px_24px_rgba(255,255,255,0.18)_inset,0_10px_30px_rgba(0,0,0,0.04)] backdrop-blur-3xl hover:border-[#FF6B35]/40`;
 
   const trialButton =
@@ -37,6 +40,11 @@ export default function BlogHeader(_props: { backLabel?: string; backHref?: stri
 
         <div className="flex items-center gap-3">
           <div className="hidden items-center gap-3 md:flex">
+            {backLabel && (
+              <a href={backHref} className={backButton}>
+                {backLabel}
+              </a>
+            )}
             <a
               href="/contact"
               className={contactButton}

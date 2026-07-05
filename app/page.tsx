@@ -154,7 +154,7 @@ export default function HomePage() {
         { title: "Measure from a plan", description: "Digital Mode - upload a plan and measure directly", icon: "/how-it-works-measure-from-plan.png" },
       ],
       images: [
-        { src: "/how-it-works/how-it-works-1-1.png", label: "Dashboard" },
+        { src: "/how-it-works-create-quote.png", label: "Create a quote" },
         { src: "/how-it-works/how-it-works-1-2.png", label: "Components" },
         { src: "/how-it-works/how-it-works-1-3.png", label: "Digital takeoff" },
       ],
@@ -182,6 +182,8 @@ export default function HomePage() {
       title: "Send orders from your quote",
       body: "Easily send orders to suppliers from a quote, add, edit, remove anything you don&apos;t need.",
       images: [
+        { src: "/how-it-works-order-layout.png", label: "Order layout" },
+        { src: "/how-it-works-order-form.png", label: "Order form" },
         { src: "/how-it-works/how-it-works-4.png", label: "Material orders" },
       ],
     },
@@ -754,13 +756,6 @@ export default function HomePage() {
                       </div>
                       <div className="flex flex-1 flex-col px-3 pb-4 pt-4">
                         <h3 className="min-h-[58px] text-base font-semibold leading-snug text-zinc-950">{tutorial.title}</h3>
-                        <p className="mt-auto inline-flex items-center gap-2 pt-3 text-sm font-medium text-[#FF6B35]">
-                          Watch on YouTube
-                          <svg viewBox="0 0 24 24" className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                            <path d="M5 12h14" />
-                            <path d="M13 6l6 6-6 6" />
-                          </svg>
-                        </p>
                       </div>
                     </a>
                   ))}
@@ -799,13 +794,6 @@ export default function HomePage() {
                   <h3 className="min-h-[74px] text-lg font-semibold leading-tight text-zinc-950">
                     {tutorials[activeTutorial]?.title ?? tutorials[0].title}
                   </h3>
-                  <p className="mt-auto inline-flex items-center gap-3 pt-3 text-base font-medium text-[#FF6B35]">
-                    Watch on YouTube
-                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M5 12h14" />
-                      <path d="M13 6l6 6-6 6" />
-                    </svg>
-                  </p>
                 </div>
               </a>
             </div>
@@ -931,17 +919,6 @@ export default function HomePage() {
     </div>
   </div>
 )}
-        <div className="flex items-center justify-center gap-4 bg-zinc-200 px-6 py-6 sm:gap-6 sm:py-7">
-          <img src="/shaun-smiling.jpg" alt="Shaun" className="h-20 w-20 rounded-full object-cover border-2 border-[#FF6B35]/50 shrink-0 sm:h-24 sm:w-24" />
-          <div className="min-w-0 flex-1 sm:flex-none">
-            <p className="mb-3 text-sm text-zinc-500 sm:mb-2">Book a 15-minute call with Shaun</p>
-            <div className="grid max-w-xs grid-cols-1 gap-2 sm:flex sm:max-w-none sm:gap-3">
-              <a href="https://calendly.com/quote-core-info/15-minute-meeting" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#FF6B35] px-7 py-3 text-base font-semibold text-white transition-colors hover:bg-[#e85d2b] sm:min-h-11 sm:px-8" onClick={() => trackEvent("book_call_click", { location: "mid" })}>Book a Call</a>
-              <a href="/free-trial" className="pill-shimmer inline-flex min-h-12 items-center justify-center rounded-full border border-zinc-300 bg-white px-7 py-3 text-sm font-medium text-zinc-900 transition-colors duration-200 hover:border-[#FF6B35]/40 sm:min-h-11 sm:px-8" onClick={() => trackEvent("free_trial_click", { location: "mid" })}>Start free trial</a>
-            </div>
-          </div>
-        </div>
-
         {/* About Shaun */}
         <section className="bg-[#FF6B35]/5 py-16">
           <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
@@ -979,11 +956,22 @@ export default function HomePage() {
           </div>
         </section>
 
+        <div className="flex items-center justify-center gap-4 bg-zinc-200 px-6 py-6 sm:gap-6 sm:py-7">
+          <img src="/shaun-smiling.jpg" alt="Shaun" className="h-20 w-20 rounded-full object-cover border-2 border-[#FF6B35]/50 shrink-0 sm:h-24 sm:w-24" />
+          <div className="min-w-0 flex-1 sm:flex-none">
+            <p className="mb-3 text-sm text-zinc-500 sm:mb-2">Book a 15-minute call with Shaun</p>
+            <div className="grid max-w-xs grid-cols-1 gap-2 sm:flex sm:max-w-none sm:gap-3">
+              <a href="https://calendly.com/quote-core-info/15-minute-meeting" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#FF6B35] px-7 py-3 text-base font-semibold text-white transition-colors hover:bg-[#e85d2b] sm:min-h-11 sm:px-8" onClick={() => trackEvent("book_call_click", { location: "mid" })}>Book a Call</a>
+              <a href="/free-trial" className="pill-shimmer inline-flex min-h-12 items-center justify-center rounded-full border border-zinc-300 bg-white px-7 py-3 text-sm font-medium text-zinc-900 transition-colors duration-200 hover:border-[#FF6B35]/40 sm:min-h-11 sm:px-8" onClick={() => trackEvent("free_trial_click", { location: "mid" })}>Start free trial</a>
+            </div>
+          </div>
+        </div>
+
         {/* Tell us what you need */}
         <section className="bg-[#FF6B35]/10 pt-14 pb-8">
           <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
-            <div className="rounded-[2rem] bg-zinc-950 p-2 shadow-[0_22px_55px_rgba(255,107,53,0.22)]">
-              <div className="relative overflow-hidden rounded-[1.6rem] border border-[#FF6B35]/35 bg-[radial-gradient(circle_at_15%_0%,rgba(255,255,255,0.12),transparent_30%),linear-gradient(135deg,#242424_0%,#111318_58%,#090a0d_100%)] px-8 py-12 sm:px-12 sm:py-14 lg:px-14 lg:py-16">
+            <div className="rounded-[2rem] shadow-[0_22px_55px_rgba(255,107,53,0.22)]">
+              <div className="relative overflow-hidden rounded-[2rem] border border-[#FF6B35]/25 bg-[radial-gradient(circle_at_15%_0%,rgba(255,255,255,0.12),transparent_30%),linear-gradient(135deg,#242424_0%,#111318_58%,#090a0d_100%)] px-8 py-12 sm:px-12 sm:py-14 lg:px-14 lg:py-16">
                 <div className="relative grid gap-12 lg:grid-cols-2 lg:gap-16 lg:before:absolute lg:before:left-1/2 lg:before:top-0 lg:before:h-full lg:before:w-px lg:before:-translate-x-1/2 lg:before:bg-white/10">
                   <div className="flex flex-col">
                     <h2 className="text-3xl font-semibold leading-tight text-white sm:text-4xl">
@@ -1215,20 +1203,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-7xl px-6 py-24 lg:px-8">
-          <div className="rounded-[2rem] border border-zinc-200 bg-white p-8 shadow-[0_20px_80px_rgba(0,0,0,0.06)]">
-            <div className="max-w-4xl">
-              <h2 className="text-3xl font-semibold sm:text-4xl">Frequently asked Questions</h2>
-            </div>
-
-            <div className="mt-10 space-y-4">
-              {homepageFaqs.map((faq) => (
-                <FaqItem key={faq.question} question={faq.question} answer={faq.answer} />
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Bottom philosophy and CTA */}
         <section className="relative overflow-hidden bg-white py-20 sm:py-24">
           <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-zinc-100/80 to-transparent" aria-hidden="true" />
@@ -1299,6 +1273,20 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto w-full max-w-7xl px-6 py-24 lg:px-8">
+          <div className="rounded-[2rem] border border-zinc-200 bg-white p-8 shadow-[0_20px_80px_rgba(0,0,0,0.06)]">
+            <div className="max-w-4xl">
+              <h2 className="text-3xl font-semibold sm:text-4xl">Frequently asked Questions</h2>
+            </div>
+
+            <div className="mt-10 space-y-4">
+              {homepageFaqs.map((faq) => (
+                <FaqItem key={faq.question} question={faq.question} answer={faq.answer} />
+              ))}
             </div>
           </div>
         </section>

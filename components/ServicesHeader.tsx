@@ -1,5 +1,5 @@
 import BlogHeader from "./BlogHeader";
 
 export default function ServicesHeader() {
-  return <BlogHeader />;
+  return <BlogHeader backLabel="Back" backHref="/" />;
 }
