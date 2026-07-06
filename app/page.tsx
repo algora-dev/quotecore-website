@@ -1122,7 +1122,7 @@ export default function HomePage() {
                   Simple, transparent pricing.
                 </h2>
                 <p className="mt-3 text-zinc-400">
-                  Start with a full 14-day free trial. No card required. Founding customer pricing now available.
+                  Start with a full feature 14 day free trial. No card required, early user prices + full customer support.
                 </p>
               </div>
               <span className="inline-flex h-12 w-fit items-center justify-center gap-3 rounded-full border border-white/15 bg-white/10 px-6 text-sm font-semibold text-white transition-colors group-hover:bg-white/15">
