@@ -1,9 +1,60 @@
 import type { MetadataRoute } from "next";
 
+// All free tool/calculator slug routes
+const FREE_SLUGS = [
+  'free-tools',
+  'free-calculators',
+  'free-quote-generator',
+  'free-invoice-generator',
+  'free-purchase-order-generator',
+  'free-roofing-calculator',
+  'free-construction-calculator',
+  'free-concrete-calculator',
+  'free-landscaping-calculator',
+  'free-birds-mouth-calculator',
+  'free-roof-pitch-calculator',
+  'free-roof-pitch-converter',
+  'free-roof-area-calculator',
+  'free-rafter-length-calculator',
+  'free-rafter-length-converter',
+  'free-hip-roof-calculator',
+  'free-hip-valley-calculator',
+  'free-hip-valley-converter',
+  'free-gable-roof-calculator',
+  'free-skillion-roof-calculator',
+  'free-flat-roof-calculator',
+  'free-roof-squares-calculator',
+  'free-roof-square-footage-calculator',
+  'free-roof-square-metre-calculator',
+  'free-roofing-material-calculator',
+  'free-roofing-quote-calculator',
+  'free-roofing-takeoff-calculator',
+  'free-roofing-waste-calculator',
+  'free-roof-tile-calculator',
+  'free-shingle-calculator',
+  'free-metal-roofing-calculator',
+  'free-roof-sheathing-calculator',
+  'free-roof-sheet-calculator',
+  'free-roof-flashing-calculator',
+  'free-roof-replacement-cost-calculator',
+  'free-guttering-calculator',
+  'free-tile-calculator',
+  'free-paint-calculator',
+  'free-flooring-calculator',
+  'free-concrete-slab-calculator',
+  'free-concrete-bag-calculator',
+  'free-footing-calculator',
+  'free-rebar-calculator',
+  'free-trench-calculator',
+  'free-slope-calculator',
+  'free-pipe-slope-calculator',
+  'free-wall-area-calculator',
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://quote-core.com";
 
-  return [
+  const routes: MetadataRoute.Sitemap = [
     {
       url: base,
       lastModified: new Date(),
@@ -107,4 +158,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     },
   ];
+
+  // Add all free tool/calculator pages
+  const freeRoutes: MetadataRoute.Sitemap = FREE_SLUGS.map((slug) => ({
+    url: `${base}/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.8,
+  }));
+
+  return [...routes, ...freeRoutes];
 }
