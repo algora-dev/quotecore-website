@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { PublicFooter } from '@/app/components/PublicFooter';
 import { FreeToolsAuthProvider } from '../_components/FreeToolsAuthProvider';
-import { FreeToolsAuthButton } from '../_components/FreeToolsAuthButton';
+import FreeToolsHeader from '../_components/FreeToolsHeader';
 
 interface CalcEntry {
   slug: string;
@@ -151,16 +151,7 @@ export default function FreeToolsPage() {
     <FreeToolsAuthProvider>
     <main className="min-h-screen bg-slate-50">
       {/* Header */}
-      <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-5xl px-4 py-4 flex items-center justify-between">
-          <Link href="/free-calculators" className="flex items-center gap-2">
-            <img src="/logo.png" alt="QuoteCore+" className="h-8" />
-          </Link>
-          <div className="flex items-center gap-3">
-            <FreeToolsAuthButton />
-          </div>
-        </div>
-      </header>
+      <FreeToolsHeader />
 
       <div className="mx-auto max-w-5xl px-4 py-8 lg:px-6">
         {/* Hero */}

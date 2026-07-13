@@ -9,7 +9,7 @@ import { ImageUpload, type ParsedUploadResult } from '../free-quote-generator/Im
 import { PromptBox } from '../free-quote-generator/PromptBox';
 import { SaveToAppButton, type FreeDocumentData } from '../shared/SaveToAppButton';
 import { FreeToolsAuthProvider } from '../_components/FreeToolsAuthProvider';
-import { FreeToolsAuthButton } from '../_components/FreeToolsAuthButton';
+import FreeToolsHeader from '../_components/FreeToolsHeader';
 import { useFreeToolsEmail } from '../_components/useFreeToolsEmail';
 
 /**
@@ -279,16 +279,7 @@ function POGeneratorForm() {
     <FreeToolsAuthProvider>
     <main className="min-h-screen bg-slate-50">
       {/* Header */}
-      <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-4xl px-4 py-4 flex items-center justify-between">
-          <Link href="/free-tools" className="flex items-center gap-2">
-            <img src="/logo.png" alt="QuoteCore+" className="h-8" />
-          </Link>
-          <div className="flex items-center gap-3">
-            <FreeToolsAuthButton compact />
-          </div>
-        </div>
-      </header>
+      <FreeToolsHeader />
 
       {/* Breadcrumb */}
       <div className="border-b border-slate-100 bg-white">
@@ -810,7 +801,7 @@ function POGeneratorForm() {
             <div className="rounded-xl border border-slate-200 bg-white p-8 print:border-0 print:p-0 relative overflow-hidden" id="po-print">
               {!emailSaved && (
                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center" style={{ zIndex: 0 }}>
-                  <img src="/logo.png" alt="" className="w-[400px] opacity-[0.07]" style={{ transform: 'rotate(-45deg)' }} />
+                  <img src="/MainQCP.png" alt="" className="w-[400px] opacity-[0.07]" style={{ transform: 'rotate(-45deg)' }} />
                 </div>
               )}
               <div style={{ position: 'relative', zIndex: 1 }}>
