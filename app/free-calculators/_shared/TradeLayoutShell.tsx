@@ -61,7 +61,7 @@ export function TradeLayoutShell({ config, children }: { config: TradeConfig; ch
       <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
         <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-4 py-3 lg:px-6">
           <Link href="/free-tools" prefetch={false} className="flex items-center gap-2">
-            <Image src="/MainQCP.png" alt="QuoteCore+" width={140} height={32} className="h-8 w-auto" priority />
+            <Image src="/logo.png" alt="QuoteCore+" width={140} height={32} className="h-8 w-auto" priority />
           </Link>
           <div className="flex items-center gap-3">
             <FreeToolsAuthButton />
@@ -78,12 +78,6 @@ export function TradeLayoutShell({ config, children }: { config: TradeConfig; ch
               className="hidden text-sm font-semibold text-slate-700 hover:text-slate-900 sm:inline"
             >
               Free Quote Generator
-            </Link>
-            <Link
-              href={signup}
-              className="rounded-full bg-[#FF6B35] px-4 py-1.5 text-sm font-semibold text-white transition-all hover:bg-[#ff5722] hover:shadow-[0_0_12px_rgba(255,107,53,0.4)]"
-            >
-              Sign up
             </Link>
           </div>
         </div>

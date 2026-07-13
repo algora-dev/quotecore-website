@@ -4,13 +4,12 @@ import { useState, Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { CalcResultPopup } from '../free-calculators/_shared/CalcResultPopup';
-import SiteFooter from '@/components/SiteFooter';
+import { PublicFooter } from '@/app/components/PublicFooter';
 import { ImageUpload, type ParsedUploadResult } from '../free-quote-generator/ImageUpload';
 import { PromptBox } from '../free-quote-generator/PromptBox';
 import { SaveToAppButton, type FreeDocumentData } from '../shared/SaveToAppButton';
 import { FreeToolsAuthProvider } from '../_components/FreeToolsAuthProvider';
 import { FreeToolsAuthButton } from '../_components/FreeToolsAuthButton';
-import FreeToolsHeader from '../_components/FreeToolsHeader';
 import { useFreeToolsEmail } from '../_components/useFreeToolsEmail';
 
 /**
@@ -76,8 +75,7 @@ function InvoiceGeneratorForm() {
   const [hideAllPrices, setHideAllPrices] = useState(false);
   const [hideTotals, setHideTotals] = useState(false);
   // Unified email/auth state
-  const { email: userEmail, isAuthed, emailSaved, setEmailInLocalStorage, clearLocalEmail, loadingEmail } = useFreeToolsEmail();
-  const [emailInput, setEmailInput] = useState('');
+  const { email: userEmail, isAuthed, emailSaved, setEmailInLocalStorage, clearLocalEmail, loadingEmail, openAuthModal } = useFreeToolsEmail();
   const [clientName, setClientName] = useState(clientParam ?? '');
   const [clientEmail, setClientEmail] = useState('');
   const [clientAddress, setClientAddress] = useState('');
@@ -288,7 +286,17 @@ function InvoiceGeneratorForm() {
   return (
     <FreeToolsAuthProvider>
     <main className="min-h-screen bg-slate-50">
-      {/* Header */}`n      <FreeToolsHeader />
+      {/* Header */}
+      <header className="border-b border-slate-200 bg-white">
+        <div className="mx-auto max-w-4xl px-4 py-4 flex items-center justify-between">
+          <Link href="/free-tools" className="flex items-center gap-2">
+            <img src="/logo.png" alt="QuoteCore+" className="h-8" />
+          </Link>
+          <div className="flex items-center gap-3">
+            <FreeToolsAuthButton compact />
+          </div>
+        </div>
+      </header>
 
       {/* Breadcrumb */}
       <div className="border-b border-slate-100 bg-white">
@@ -312,10 +320,10 @@ function InvoiceGeneratorForm() {
           </p>
         </section>
 
-          {/* Email capture / auth status */}
+          {/* Auth status / signup prompt */}
           <div className="rounded-xl border border-slate-200 bg-white p-4 mb-6 print:hidden">
             {loadingEmail ? (
-              <div className="h-10" />
+              <div className="h-6" />
             ) : emailSaved ? (
               <div className="flex items-center justify-between">
                 <div>
@@ -326,28 +334,35 @@ function InvoiceGeneratorForm() {
                       : 'Image upload: 10/day · Text parse: 20/day · Manual: Unlimited'}
                   </p>
                 </div>
-                {!isAuthed && (
-                  <button onClick={() => clearLocalEmail()} className="text-xs font-medium text-[#FF6B35] hover:text-orange-600 transition">Change</button>
-                )}
+                <div className="flex items-center gap-3">
+                  {!isAuthed && (
+                    <button onClick={() => openAuthModal('signup')} className="text-xs font-medium text-[#FF6B35] hover:text-orange-600 transition">
+                      Create account
+                    </button>
+                  )}
+                  <button onClick={() => clearLocalEmail()} className="text-xs font-medium text-slate-400 hover:text-slate-600 transition">Change</button>
+                </div>
               </div>
             ) : (
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                <div className="flex-1">
-                  <input
-                    type="email"
-                    value={emailInput}
-                    onChange={(e) => setEmailInput(e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-orange-500 focus:outline-none"
-                    placeholder="Enter your email for more free generations and no watermark"
-                  />
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-sm font-medium text-slate-700">Sign up free to remove watermarks & get more daily generations</p>
                   <p className="mt-1 text-xs text-slate-400">Image upload: 3/day · Text parse: 5/day · Manual: Unlimited</p>
                 </div>
-                <button
-                  onClick={() => { if (emailInput.trim()) setEmailInLocalStorage(emailInput.trim()); }}
-                  className="rounded-full bg-black px-4 py-2 text-xs font-semibold text-white hover:bg-slate-800 transition whitespace-nowrap"
-                >
-                  Save
-                </button>
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    onClick={() => openAuthModal('signup')}
+                    className="rounded-full bg-[#FF6B35] px-4 py-2 text-xs font-semibold text-white hover:bg-[#ff5722] transition whitespace-nowrap"
+                  >
+                    Sign up free
+                  </button>
+                  <button
+                    onClick={() => openAuthModal('signin')}
+                    className="text-xs font-medium text-slate-500 hover:text-slate-900 transition whitespace-nowrap"
+                  >
+                    Log in
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -799,7 +814,7 @@ function InvoiceGeneratorForm() {
             <div className="rounded-xl border border-slate-200 bg-white p-8 print:border-0 print:p-0 relative overflow-hidden" id="invoice-print">
               {!emailSaved && (
                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center" style={{ zIndex: 0 }}>
-                  <img src="/MainQCP.png" alt="" className="w-[400px] opacity-[0.07]" style={{ transform: 'rotate(-45deg)' }} />
+                  <img src="/logo.png" alt="" className="w-[400px] opacity-[0.07]" style={{ transform: 'rotate(-45deg)' }} />
                 </div>
               )}
               <div style={{ position: 'relative', zIndex: 1 }}>
@@ -975,7 +990,7 @@ function InvoiceGeneratorForm() {
               </details>
               <details className="rounded-xl border border-slate-200 bg-white">
                 <summary className="cursor-pointer px-4 py-3 text-sm font-semibold text-slate-900 hover:text-[#FF6B35] transition select-none">What&apos;s the difference between this and QuoteCore+?</summary>
-                <div className="px-4 pb-4"><p className="text-sm text-slate-600">This free tool generates a one-off invoice. QuoteCore+ gives you a complete quoting and business management platform in one place - track and store all your documents, send follow-ups to clients, and auto-update statuses. You get Smart Components&#8482; for fast reusable line items, an advanced digital takeoff and measuring feature that works for all industries (roofing, construction, concrete, landscaping and more), client database, order and invoice management, and online quote acceptance. <Link href="/free-trial" className="text-[#FF6B35] font-medium">Start a free trial &rarr;</Link></p></div>
+                <div className="px-4 pb-4"><p className="text-sm text-slate-600">This free tool generates a one-off invoice. QuoteCore+ gives you a complete quoting and business management platform in one place - track and store all your documents, send follow-ups to clients, and auto-update statuses. You get Smart Components&#8482; for fast reusable line items, an advanced digital takeoff and measuring feature that works for all industries (roofing, construction, concrete, landscaping and more), client database, order and invoice management, and online quote acceptance. <Link href="/signup" className="text-[#FF6B35] font-medium">Start a free trial &rarr;</Link></p></div>
               </details>
               <details className="rounded-xl border border-slate-200 bg-white">
                 <summary className="cursor-pointer px-4 py-3 text-sm font-semibold text-slate-900 hover:text-[#FF6B35] transition select-none">How do I remove the watermark and create more free invoices?</summary>
@@ -985,7 +1000,7 @@ function InvoiceGeneratorForm() {
           </div>
         </section>
       </div>
-      <SiteFooter />
+      <PublicFooter />
 
       <style jsx global>{`
         @media print {
