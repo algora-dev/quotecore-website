@@ -44,8 +44,8 @@ export default function FreeToolsHeader() {
         </a>
 
         <div className="flex items-center gap-3">
-          {/* Free tools auth button */}
-          <FreeToolsAuthButton compact />
+          {/* Free tools auth button — primary CTA */}
+          <FreeToolsAuthButton />
 
           <div className="hidden items-center gap-3 md:flex">
             <a
@@ -54,13 +54,6 @@ export default function FreeToolsHeader() {
               onClick={() => trackEvent("contact_click", { location: "nav" })}
             >
               Contact us
-            </a>
-            <a
-              href="/free-trial"
-              className={trialButton}
-              onClick={() => trackEvent("free_trial_click", { location: "nav" })}
-            >
-              Start free trial
             </a>
           </div>
 
@@ -105,13 +98,6 @@ export default function FreeToolsHeader() {
             </div>
           </div>
           <div className="mx-auto flex max-w-7xl flex-col gap-3 px-6 pb-6 pt-2 sm:flex-row lg:px-8">
-            <a
-              href="/free-trial"
-              className="inline-flex min-h-12 flex-1 items-center justify-center rounded-full bg-[#FF6B35] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#e85d2b]"
-              onClick={() => { trackEvent("free_trial_click", { location: "nav-menu" }); setMenuOpen(false); }}
-            >
-              Start free trial
-            </a>
             <a
               href="/contact"
               className="pill-shimmer inline-flex min-h-12 flex-1 items-center justify-center rounded-full border border-zinc-300 bg-white px-5 text-sm font-medium text-zinc-900 transition-colors duration-200 hover:border-[#FF6B35]/40"

@@ -10,6 +10,7 @@ import { PromptBox } from '../free-quote-generator/PromptBox';
 import { SaveToAppButton, type FreeDocumentData } from '../shared/SaveToAppButton';
 import { FreeToolsAuthProvider } from '../_components/FreeToolsAuthProvider';
 import FreeToolsHeader from '../_components/FreeToolsHeader';
+import { FreeToolsAuthCard } from '../_components/FreeToolsAuthCard';
 import { useFreeToolsEmail } from '../_components/useFreeToolsEmail';
 
 /**
@@ -310,30 +311,7 @@ function InvoiceGeneratorForm() {
             AI will fill in the form - or paste your details, or type it manually. No signup required.
           </p>
         </section>
-
-          {/* Auth status / signup prompt */}
-          <div className="rounded-xl border border-slate-200 bg-white p-4 mb-6 print:hidden">
-            {loadingEmail ? (
-              <div className="h-6" />
-            ) : emailSaved ? (
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-slate-700">✓ {userEmail}</p>
-                  <p className="mt-1 text-xs text-slate-400">
-                    {isAuthed
-                      ? 'Logged in · Image upload: 10/day · Text parse: 20/day · Manual: Unlimited'
-                      : 'Image upload: 10/day · Text parse: 20/day · Manual: Unlimited'}
-                  </p>
-                </div>
-                <div className="flex items-center gap-3">
-                  {!isAuthed && (
-                    <button onClick={() => openAuthModal('signup')} className="text-xs font-medium text-[#FF6B35] hover:text-orange-600 transition">
-                      Create account
-                    </button>
-                  )}
-                  <button onClick={() => clearLocalEmail()} className="text-xs font-medium text-slate-400 hover:text-slate-600 transition">Change</button>
-                </div>
-              </div>
+        <FreeToolsAuthCard />
             ) : (
               <div className="flex items-center justify-between gap-4">
                 <div>
