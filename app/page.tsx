@@ -440,7 +440,7 @@ export default function HomePage() {
                   className="hero-video-float relative z-10 w-full max-w-none lg:w-[96%] lg:translate-x-4 xl:w-[104%] 2xl:w-[108%]"
                   style={{display: "block"}}
                 >
-                  <source src="/qc-hero-laptop.mp4" type="video/mp4" />
+                  <source src="/Less than 3min w captions.mp4" type="video/mp4" />
                 </video>
               </div>
             </div>
