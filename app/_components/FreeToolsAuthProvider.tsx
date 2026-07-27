@@ -37,6 +37,7 @@ export function FreeToolsAuthProvider({ children }: { children: ReactNode }) {
   const [modalMode, setModalMode] = useState<'signup' | 'signin'>('signup');
 
   useEffect(() => {
+    if (!supabase) { setLoading(false); return; }
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       setLoading(false);
@@ -51,6 +52,7 @@ export function FreeToolsAuthProvider({ children }: { children: ReactNode }) {
   }, [supabase]);
 
   const signInWithGoogle = async () => {
+    if (!supabase) return;
     const redirectTo = typeof window !== 'undefined' ? window.location.origin + window.location.pathname : undefined;
     await supabase.auth.signInWithOAuth({
       provider: 'google',
@@ -59,12 +61,14 @@ export function FreeToolsAuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signInWithEmail = async (email: string, password: string) => {
+    if (!supabase) return { error: 'Auth not available' };
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (!error) setIsAuthModalOpen(false);
     return { error: error?.message ?? null };
   };
 
   const signUpWithEmail = async (email: string, password: string) => {
+    if (!supabase) return { error: 'Auth not available', needsConfirmation: false };
     const redirectTo = typeof window !== 'undefined' ? window.location.origin + window.location.pathname : undefined;
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -78,6 +82,7 @@ export function FreeToolsAuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signOut = async () => {
+    if (!supabase) return;
     await supabase.auth.signOut();
   };
 

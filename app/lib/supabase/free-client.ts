@@ -9,8 +9,8 @@ import { createClient } from '@supabase/supabase-js';
  * project doesn't have the ssr package installed.
  */
 export function createFreeToolsClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_FREE_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_FREE_SUPABASE_ANON_KEY!,
-  );
+  const url = process.env.NEXT_PUBLIC_FREE_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_FREE_SUPABASE_ANON_KEY;
+  if (!url || !key) return null;
+  return createClient(url, key);
 }
